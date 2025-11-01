@@ -1,5 +1,6 @@
 import { GiftCard } from "@/components/GiftCard/GiftCard";
 import Label from "@/components/Label/Label";
+import { mockGifts } from "@/mock-data/mockGifts";
 
 const WishlistsPage = () => {
   return (
@@ -17,32 +18,15 @@ export default WishlistsPage;
 const WishlistsPageContent = () => {
   return (
     <div className="flex flex-col w-full pt-8 gap-4">
-      <GiftCard
-        title="New Laptop"
-        requestedBy="Alice"
-        imageSrc={"https://picsum.photos/200"}
-        reservedBy="other"
-      />
-      <GiftCard title="Headphones" requestedBy="Charlie" reservedBy="me" />
-      <GiftCard title="Smartwatch" requestedBy="Bob" reservedBy={null} />
-      <GiftCard title="Backpack" requestedBy="Diana" reservedBy="other" />
-      <GiftCard
-        title="E-Reader"
-        requestedBy="Ethan"
-        imageSrc={"https://picsum.photos/201"}
-        reservedBy="me"
-      />
-      <GiftCard
-        title="Bluetooth Speaker"
-        requestedBy="Fiona"
-        reservedBy={null}
-      />
-      <GiftCard
-        title="Travel Mug with long long long long long name"
-        requestedBy="George"
-        imageSrc={"https://picsum.photos/202"}
-        reservedBy={null}
-      />
+      {mockGifts.map((gift) => (
+        <GiftCard
+          key={gift.id}
+          title={gift.title}
+          requestedBy={gift.requestedBy}
+          reservedBy={gift.reservedBy}
+          imageSrc={gift.imageSrc}
+        />
+      ))}
     </div>
   );
 };
