@@ -21,7 +21,7 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => (
-  <html lang="en">
+  <html lang="en" data-theme="wishlists">
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       {children}
     </body>

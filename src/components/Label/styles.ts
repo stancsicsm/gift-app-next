@@ -3,31 +3,25 @@ import type { LabelProps } from "@/components/Label/Label";
 
 export const getLabelStyles = ({
   size = "medium",
-  color = "dark",
+  subtle = false,
   weight = "regular",
-}: Pick<LabelProps, "size" | "color" | "weight">) => {
+}: Pick<LabelProps, "size" | "subtle" | "weight">) => {
   const sizeClasses = {
     small: "text-sm",
-    medium: "text-base",
+    medium: "text-md",
     large: "text-lg",
     "x-large": "text-xl",
   };
 
-  const colorClasses = {
-    dark: "text-gray-900",
-    light: "text-white",
-    subtle: "text-gray-500",
-    primary: "text-primary",
-  };
-
   const weightClasses = {
     regular: "font-normal",
+    "semi-bold": "font-semibold",
     bold: "font-bold",
   };
 
   return clsx(
     size ? sizeClasses[size] : undefined,
-    color ? colorClasses[color] : undefined,
     weight ? weightClasses[weight] : undefined,
+    subtle ? "text-accent-content" : undefined,
   );
 };

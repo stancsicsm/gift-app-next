@@ -1,18 +1,31 @@
+import clsx from "clsx";
 import type { ElementType, PropsWithChildren } from "react";
 import { getLabelStyles } from "@/components/Label/styles";
+import type { PropsWithClassName } from "@/utils/type-utils";
 
-export type LabelProps = PropsWithChildren<{
-  size?: "small" | "medium" | "large" | "x-large";
-  color?: "dark" | "light" | "subtle" | "primary";
-  weight?: "regular" | "bold";
-  as?: ElementType;
-}>;
+export type LabelProps = PropsWithClassName<
+  PropsWithChildren<{
+    size?: "small" | "medium" | "large" | "x-large";
+    subtle?: boolean;
+    weight?: "regular" | "semi-bold" | "bold";
+    as?: ElementType;
+  }>
+>;
 
-const Label = ({ size, color, weight, children, as = "p" }: LabelProps) => {
+const Label = ({
+  size,
+  subtle,
+  weight,
+  children,
+  as = "p",
+  className,
+}: LabelProps) => {
   const Component = as;
 
   return (
-    <Component className={getLabelStyles({ size, color, weight })}>
+    <Component
+      className={clsx(getLabelStyles({ size, subtle, weight }), className)}
+    >
       {children}
     </Component>
   );
