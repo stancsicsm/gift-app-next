@@ -1,4 +1,4 @@
-import { Card } from "@/components/Card/Card";
+import { GiftCard } from "@/components/GiftCard/GiftCard";
 import Label from "@/components/Label/Label";
 
 const WishlistsPage = () => {
@@ -17,24 +17,31 @@ export default WishlistsPage;
 const WishlistsPageContent = () => {
   return (
     <div className="flex flex-col w-full pt-8 gap-4">
-      <Card
+      <GiftCard
         title="New Laptop"
-        subtitle="Reserved by Alice"
+        requestedBy="Alice"
         imageSrc={"https://picsum.photos/200"}
+        reservedBy="other"
       />
-      <Card title="Headphones" subtitle="Reserved by Bob" />
-      <Card title="Smartwatch" subtitle="Reserved by Charlie" />
-      <Card title="Backpack" subtitle="Reserved by Diana" />
-      <Card
+      <GiftCard title="Headphones" requestedBy="Charlie" reservedBy="me" />
+      <GiftCard title="Smartwatch" requestedBy="Bob" reservedBy={null} />
+      <GiftCard title="Backpack" requestedBy="Diana" reservedBy="other" />
+      <GiftCard
         title="E-Reader"
-        subtitle="Reserved by Ethan"
+        requestedBy="Ethan"
         imageSrc={"https://picsum.photos/201"}
+        reservedBy="me"
       />
-      <Card title="Bluetooth Speaker" subtitle="Reserved by Fiona" />
-      <Card
+      <GiftCard
+        title="Bluetooth Speaker"
+        requestedBy="Fiona"
+        reservedBy={null}
+      />
+      <GiftCard
         title="Travel Mug with long long long long long name"
-        subtitle="Reserved by George"
+        requestedBy="George"
         imageSrc={"https://picsum.photos/202"}
+        reservedBy={null}
       />
     </div>
   );
