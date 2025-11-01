@@ -8,6 +8,7 @@ export type LabelProps = PropsWithClassName<
     size?: "small" | "medium" | "large" | "x-large";
     subtle?: boolean;
     weight?: "regular" | "semi-bold" | "bold";
+    noLineBreak?: boolean;
     as?: ElementType;
   }>
 >;
@@ -16,6 +17,7 @@ const Label = ({
   size,
   subtle,
   weight,
+  noLineBreak,
   children,
   as = "p",
   className,
@@ -24,7 +26,13 @@ const Label = ({
 
   return (
     <Component
-      className={clsx(getLabelStyles({ size, subtle, weight }), className)}
+      className={clsx(
+        getLabelStyles({ size, subtle, weight }),
+        {
+          "overflow-hidden overflow-ellipsis whitespace-nowrap": noLineBreak,
+        },
+        className,
+      )}
     >
       {children}
     </Component>

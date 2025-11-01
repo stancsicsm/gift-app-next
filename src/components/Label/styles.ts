@@ -8,7 +8,7 @@ export const getLabelStyles = ({
 }: Pick<LabelProps, "size" | "subtle" | "weight">) => {
   const sizeClasses = {
     small: "text-sm",
-    medium: "text-md",
+    medium: "text-base",
     large: "text-lg",
     "x-large": "text-xl",
   };
@@ -22,6 +22,6 @@ export const getLabelStyles = ({
   return clsx(
     size ? sizeClasses[size] : undefined,
     weight ? weightClasses[weight] : undefined,
-    subtle ? "text-accent-content" : undefined,
+    subtle ? "text-neutral-content" : undefined,
   );
 };
