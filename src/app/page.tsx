@@ -1,12 +1,14 @@
 "use client";
 
-import { Gift } from "lucide-react";
+import { Gift, Plus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import Button from "@/components/Button/Button";
 import GiftCard from "@/components/GiftCard/GiftCard";
 import GiftRequesterFilter from "@/components/GiftRequesterFilter/GiftRequesterFilter";
 import GiftReservedFilter from "@/components/GiftReservedFilter/GiftReservedFilter";
 import Label from "@/components/Label/Label";
+import PageTitle from "@/components/PageTitle/PageTitle";
 import { mockGifts } from "@/mock-data/mockGifts";
 import { mockUsers } from "@/mock-data/mockUsers";
 import { getUserNameById } from "@/utils/get-user-name-by-id";
@@ -14,21 +16,23 @@ import { getUserNameById } from "@/utils/get-user-name-by-id";
 const WishlistsPage = () => {
   return (
     <div className="flex flex-col items-center justify-center p-4 pt-6 gap-4">
-      <WishlistsPageTitle />
+      <PageTitle
+        title="Gift Wishes"
+        rightSlot={
+          <Link href="/gift/new">
+            <Button variant="ghost">
+              <Plus />
+            </Button>
+          </Link>
+        }
+        className="pb-4"
+      />
       <WishlistsPageContent />
     </div>
   );
 };
 
 export default WishlistsPage;
-
-const WishlistsPageTitle = () => {
-  return (
-    <Label size="x-large" weight="semi-bold" className="pb-4">
-      Gift Wishes
-    </Label>
-  );
-};
 
 const WishlistsPageContent = () => {
   const [showFreeGiftsOnly, setShowFreeGiftsOnly] = useState(false);
