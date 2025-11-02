@@ -1,5 +1,6 @@
 "use client";
 
+import { Gift } from "lucide-react";
 import { useState } from "react";
 import GiftCard from "@/components/GiftCard/GiftCard";
 import GiftRequesterFilter from "@/components/GiftRequesterFilter/GiftRequesterFilter";
@@ -34,6 +35,12 @@ const WishlistsPageContent = () => {
     number | null
   >(null);
 
+  const giftsToDisplay = mockGifts
+    .filter((gift) => (showFreeGiftsOnly ? !gift.reservedBy : true))
+    .filter((gift) =>
+      selectedRequestedById ? gift.requestedBy === selectedRequestedById : true,
+    );
+
   return (
     <div className="flex flex-col w-full gap-4">
       <GiftRequesterFilter
@@ -46,22 +53,31 @@ const WishlistsPageContent = () => {
         setShowFreeGiftsOnly={setShowFreeGiftsOnly}
       />
 
-      {mockGifts
-        .filter((gift) => (showFreeGiftsOnly ? !gift.reservedBy : true))
-        .filter((gift) =>
-          selectedRequestedById
-            ? gift.requestedBy === selectedRequestedById
-            : true,
-        )
-        .map((gift) => (
-          <GiftCard
-            key={gift.id}
-            title={gift.title}
-            requestedByName={getUserNameById(mockUsers, gift.requestedBy)}
-            reservedBy={gift.reservedBy}
-            imageSrc={gift.imageSrc}
-          />
-        ))}
+      {giftsToDisplay.map((gift) => (
+        <GiftCard
+          key={gift.id}
+          title={gift.title}
+          requestedByName={getUserNameById(mockUsers, gift.requestedBy)}
+          reservedBy={gift.reservedBy}
+          imageSrc={gift.imageSrc}
+        />
+      ))}
+      {giftsToDisplay.length === 0 && <NoGiftsMessage />}
+    </div>
+  );
+};
+
+const NoGiftsMessage = () => {
+  return (
+    <div className="flex flex-col items-center justify-center pt-8 gap-2">
+      <Gift
+        size={64}
+        // accent-content color
+        color="#677389"
+      />
+      <Label size="x-large" subtle>
+        No gifts
+      </Label>
     </div>
   );
 };
