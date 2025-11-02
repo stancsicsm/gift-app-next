@@ -1,12 +1,15 @@
 import clsx from "clsx";
 import type { ButtonHTMLAttributes } from "react";
+import { getButtonSize, getButtonVariant } from "@/components/Button/styles";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "light" | "ghost" | "danger";
+  size?: "small" | "medium" | "large";
 };
 
 const Button = ({
   variant = "primary",
+  size = "medium",
   children,
   className,
   ...props
@@ -16,12 +19,8 @@ const Button = ({
       type="button"
       className={clsx(
         "btn",
-        {
-          "btn-primary": variant === "primary",
-          "btn-secondary": variant === "secondary",
-          "btn-ghost": variant === "ghost",
-          "btn-error": variant === "danger",
-        },
+        getButtonVariant({ variant }),
+        getButtonSize({ size }),
         className,
       )}
       {...props}

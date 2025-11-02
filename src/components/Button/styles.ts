@@ -19,3 +19,18 @@ export const getButtonVariant = ({
       assertUnreachable(variant);
   }
 };
+
+export const getButtonSize = ({
+  size,
+}: Required<Pick<ButtonProps, "size">>) => {
+  switch (size) {
+    case "small":
+      return "btn-sm";
+    case "medium":
+      return "btn-md";
+    case "large":
+      return "btn-lg";
+    default:
+      assertUnreachable(size);
+  }
+};

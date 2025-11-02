@@ -49,6 +49,13 @@ const GiftPageContent = ({ gift }: { gift: Gift | undefined }) => {
         </Label>
         {gift.description && <Label subtle>{gift.description}</Label>}
         <ViewGiftButton link={gift.link} />
+        <Button
+          size="large"
+          variant={gift.reservedBy === "me" ? "danger" : "primary"}
+          disabled={gift.reservedBy === "other"}
+        >
+          {gift.reservedBy === "me" ? "Cancel Reservation" : "Reserve Gift"}
+        </Button>
       </div>
     </div>
   );
