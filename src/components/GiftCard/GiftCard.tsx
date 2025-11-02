@@ -7,7 +7,6 @@ type GiftCardProps = {
   requestedByName: string;
   reservedBy: "me" | "other" | null;
   imageSrc?: string;
-  onCardClick?: () => void;
   onButtonClick?: () => void;
 };
 
@@ -16,14 +15,10 @@ const GiftCard = ({
   requestedByName,
   reservedBy,
   imageSrc,
-  onCardClick,
   onButtonClick,
 }: GiftCardProps) => {
   return (
-    <div
-      className="card flex-row w-full bg-base-200 shadow-sm"
-      onClick={onCardClick}
-    >
+    <div className="card flex-row w-full bg-base-200 shadow-sm">
       <figure className="p-4">
         <img
           src={imageSrc ?? "/gift-placeholder.svg"}
@@ -42,7 +37,10 @@ const GiftCard = ({
             </Label>
           )}
         </div>
-        <div className="card-actions mt-auto">
+        <div
+          className="card-actions mt-auto"
+          onClick={(e) => e.preventDefault()}
+        >
           <Button
             onClick={onButtonClick}
             variant={reservedBy === "me" ? "danger" : "primary"}

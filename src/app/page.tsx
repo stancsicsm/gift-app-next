@@ -1,6 +1,7 @@
 "use client";
 
 import { Gift } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import GiftCard from "@/components/GiftCard/GiftCard";
 import GiftRequesterFilter from "@/components/GiftRequesterFilter/GiftRequesterFilter";
@@ -54,13 +55,14 @@ const WishlistsPageContent = () => {
       />
 
       {giftsToDisplay.map((gift) => (
-        <GiftCard
-          key={gift.id}
-          title={gift.title}
-          requestedByName={getUserNameById(mockUsers, gift.requestedBy)}
-          reservedBy={gift.reservedBy}
-          imageSrc={gift.imageSrc}
-        />
+        <Link key={gift.id} href={`/gift/${gift.id}`}>
+          <GiftCard
+            title={gift.title}
+            requestedByName={getUserNameById(mockUsers, gift.requestedBy)}
+            reservedBy={gift.reservedBy}
+            imageSrc={gift.imageSrc}
+          />
+        </Link>
       ))}
       {giftsToDisplay.length === 0 && <NoGiftsMessage />}
     </div>
