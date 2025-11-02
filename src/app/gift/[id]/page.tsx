@@ -13,7 +13,7 @@ const GiftPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const gift = mockGifts.find((gift) => gift.id === Number(id));
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <PageTitle
         title="Gift Wish"
         leftSlot={
@@ -37,13 +37,13 @@ const GiftPageContent = ({ gift }: { gift: Gift | undefined }) => {
     return <GiftMessage message="Gift not found" />;
   }
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       <ImageOrPlaceholderWithPrice
         title={gift.title}
         imageSrc={gift.imageSrc}
         price={gift.price}
       />
-      <div className="flex flex-col p-4 gap-4">
+      <div className="flex flex-col flex-1 p-4 pb-8 gap-4">
         <Label size="xx-large" weight="semi-bold">
           {gift.title}
         </Label>
@@ -53,6 +53,7 @@ const GiftPageContent = ({ gift }: { gift: Gift | undefined }) => {
           size="large"
           variant={gift.reservedBy === "me" ? "danger" : "primary"}
           disabled={gift.reservedBy === "other"}
+          className="w-full mt-auto shadow-sm"
         >
           {gift.reservedBy === "me" ? "Cancel Reservation" : "Reserve Gift"}
         </Button>
