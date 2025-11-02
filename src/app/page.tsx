@@ -1,13 +1,13 @@
 "use client";
 
-import { Gift, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import Button from "@/components/Button/Button";
 import GiftCard from "@/components/GiftCard/GiftCard";
+import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import GiftRequesterFilter from "@/components/GiftRequesterFilter/GiftRequesterFilter";
 import GiftReservedFilter from "@/components/GiftReservedFilter/GiftReservedFilter";
-import Label from "@/components/Label/Label";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import { mockGifts } from "@/mock-data/mockGifts";
 import { mockUsers } from "@/mock-data/mockUsers";
@@ -15,7 +15,7 @@ import { getUserNameById } from "@/utils/get-user-name-by-id";
 
 const WishlistsPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center p-4 pt-6 gap-4">
+    <div className="flex flex-col items-center justify-center p-4 gap-4">
       <PageTitle
         title="Gift Wishes"
         rightSlot={
@@ -68,22 +68,7 @@ const WishlistsPageContent = () => {
           />
         </Link>
       ))}
-      {giftsToDisplay.length === 0 && <NoGiftsMessage />}
-    </div>
-  );
-};
-
-const NoGiftsMessage = () => {
-  return (
-    <div className="flex flex-col items-center justify-center pt-8 gap-2">
-      <Gift
-        size={64}
-        // accent-content color
-        color="#677389"
-      />
-      <Label size="x-large" subtle>
-        No gifts
-      </Label>
+      {giftsToDisplay.length === 0 && <GiftMessage message="No gifts" />}
     </div>
   );
 };

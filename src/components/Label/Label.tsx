@@ -5,7 +5,7 @@ import type { PropsWithClassName } from "@/utils/type-utils";
 
 export type LabelProps = PropsWithClassName<
   PropsWithChildren<{
-    size?: "small" | "medium" | "large" | "x-large";
+    size?: "small" | "medium" | "large" | "x-large" | "xx-large";
     subtle?: boolean;
     weight?: "regular" | "semi-bold" | "bold";
     noLineBreak?: boolean;

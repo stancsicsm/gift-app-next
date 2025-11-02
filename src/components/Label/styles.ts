@@ -11,6 +11,7 @@ export const getLabelStyles = ({
     medium: "text-base",
     large: "text-lg",
     "x-large": "text-xl",
+    "xx-large": "text-2xl",
   };
 
   const weightClasses = {
