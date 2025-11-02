@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Button from "@/components/Button/Button";
-import { GiftCard } from "@/components/GiftCard/GiftCard";
+import GiftCard from "@/components/GiftCard/GiftCard";
+import GiftRequesterFilter from "@/components/GiftRequesterFilter/GiftRequesterFilter";
+import GiftReservedFilter from "@/components/GiftReservedFilter/GiftReservedFilter";
 import Label from "@/components/Label/Label";
 import { mockGifts } from "@/mock-data/mockGifts";
+import { mockUsers } from "@/mock-data/mockUsers";
+import { getUserNameById } from "@/utils/get-user-name-by-id";
 
 const WishlistsPage = () => {
   return (
@@ -27,53 +30,38 @@ const WishlistsPageTitle = () => {
 
 const WishlistsPageContent = () => {
   const [showFreeGiftsOnly, setShowFreeGiftsOnly] = useState(false);
+  const [selectedRequestedById, setSelectedRequestedById] = useState<
+    number | null
+  >(null);
 
   return (
     <div className="flex flex-col w-full gap-4">
+      <GiftRequesterFilter
+        users={mockUsers}
+        selectedRequestedById={selectedRequestedById}
+        setSelectedRequestedById={setSelectedRequestedById}
+      />
       <GiftReservedFilter
         showFreeGiftsOnly={showFreeGiftsOnly}
         setShowFreeGiftsOnly={setShowFreeGiftsOnly}
       />
+
       {mockGifts
         .filter((gift) => (showFreeGiftsOnly ? !gift.reservedBy : true))
+        .filter((gift) =>
+          selectedRequestedById
+            ? gift.requestedBy === selectedRequestedById
+            : true,
+        )
         .map((gift) => (
           <GiftCard
             key={gift.id}
             title={gift.title}
-            requestedBy={gift.requestedBy}
+            requestedByName={getUserNameById(mockUsers, gift.requestedBy)}
             reservedBy={gift.reservedBy}
             imageSrc={gift.imageSrc}
           />
         ))}
-    </div>
-  );
-};
-
-type GiftReservedFilterProps = {
-  showFreeGiftsOnly: boolean;
-  setShowFreeGiftsOnly: (value: boolean) => void;
-};
-
-const GiftReservedFilter = ({
-  showFreeGiftsOnly,
-  setShowFreeGiftsOnly,
-}: GiftReservedFilterProps) => {
-  return (
-    <div className="flex gap-2 w-full">
-      <Button
-        className="flex-1 shadow-sm"
-        variant={showFreeGiftsOnly ? "light" : "primary"}
-        onClick={() => setShowFreeGiftsOnly(false)}
-      >
-        All Gifts
-      </Button>
-      <Button
-        className="flex-1 shadow-sm"
-        variant={showFreeGiftsOnly ? "primary" : "light"}
-        onClick={() => setShowFreeGiftsOnly(true)}
-      >
-        Free Gifts Only
-      </Button>
     </div>
   );
 };

@@ -4,16 +4,16 @@ import Label from "@/components/Label/Label";
 
 type GiftCardProps = {
   title: string;
-  requestedBy: string;
+  requestedByName: string;
   reservedBy: "me" | "other" | null;
   imageSrc?: string;
   onCardClick?: () => void;
   onButtonClick?: () => void;
 };
 
-export const GiftCard = ({
+const GiftCard = ({
   title,
-  requestedBy,
+  requestedByName,
   reservedBy,
   imageSrc,
   onCardClick,
@@ -36,9 +36,9 @@ export const GiftCard = ({
           <Label size="large" weight="semi-bold" noLineBreak>
             {title}
           </Label>
-          {requestedBy && (
+          {requestedByName && (
             <Label size="medium" subtle noLineBreak>
-              Requested by {requestedBy}
+              Requested by {requestedByName}
             </Label>
           )}
         </div>
@@ -55,3 +55,5 @@ export const GiftCard = ({
     </div>
   );
 };
+
+export default GiftCard;

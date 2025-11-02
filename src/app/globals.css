@@ -20,7 +20,7 @@
   --color-secondary: #daecfa;
   --color-secondary-content: #4cabe6;
   --color-accent: oklch(20% 0 0);
-  --color-accent-content: oklch(80% 0.0081 61.42);
+  --color-accent-content: #677389;
   --color-neutral: oklch(20% 0 0);
   --color-neutral-content: #677389;
   --color-info: oklch(80.39% 0.1148 241.68);
@@ -48,7 +48,14 @@
   --noise: 0;
 }
 
-/*@theme inline {*/
-/*  --color-primary: #4cabe6;*/
-/*  --color-secondary: #daecfa;*/
-/*}*/
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

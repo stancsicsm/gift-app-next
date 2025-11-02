@@ -22,6 +22,6 @@ export const getLabelStyles = ({
   return clsx(
     size ? sizeClasses[size] : undefined,
     weight ? weightClasses[weight] : undefined,
-    subtle ? "text-neutral-content" : undefined,
+    subtle ? "text-accent-content" : undefined,
   );
 };
