@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
+import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
 
 type GiftCardProps = {
   title: string;
@@ -43,7 +44,7 @@ const GiftCard = ({
         >
           <Button
             onClick={onButtonClick}
-            variant={reservedBy === "me" ? "danger" : "primary"}
+            variant={getGiftButtonVariant(reservedBy)}
             disabled={reservedBy === "other"}
           >
             {reservedBy === "me" ? "Cancel" : "Reserve"}

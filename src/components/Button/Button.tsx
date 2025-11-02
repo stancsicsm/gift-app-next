@@ -3,7 +3,15 @@ import type { ButtonHTMLAttributes } from "react";
 import { getButtonSize, getButtonVariant } from "@/components/Button/styles";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "light" | "ghost" | "danger";
+  variant?:
+    | "primary"
+    | "primary-gradient"
+    | "secondary"
+    | "light"
+    | "ghost"
+    | "danger"
+    | "danger-gradient"
+    | "disabled";
   size?: "small" | "medium" | "large";
 };
 

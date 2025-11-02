@@ -1,5 +1,9 @@
+import clsx from "clsx";
 import type { ButtonProps } from "@/components/Button/Button";
 import { assertUnreachable } from "@/utils/assert-unreachable";
+
+const GRADIENT_COMMON_CLASSES =
+  "hover:brightness-90 active:brightness-90 transition-all duration-200 ease-in-out";
 
 export const getButtonVariant = ({
   variant,
@@ -7,6 +11,11 @@ export const getButtonVariant = ({
   switch (variant) {
     case "primary":
       return "btn-primary";
+    case "primary-gradient":
+      return clsx(
+        "btn-primary bg-primary-gradient border-0",
+        GRADIENT_COMMON_CLASSES,
+      );
     case "secondary":
       return "btn-secondary";
     case "light":
@@ -15,6 +24,13 @@ export const getButtonVariant = ({
       return "btn-ghost";
     case "danger":
       return "btn-error";
+    case "danger-gradient":
+      return clsx(
+        "btn-error bg-danger-gradient border-0",
+        GRADIENT_COMMON_CLASSES,
+      );
+    case "disabled":
+      return "btn-disabled";
     default:
       assertUnreachable(variant);
   }

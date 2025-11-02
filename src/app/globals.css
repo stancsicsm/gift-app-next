@@ -58,4 +58,11 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, #4cabe6 0%, #23d3ee 100%);
+  }
+  .bg-danger-gradient {
+    background: linear-gradient(135deg, #fdd9df 0%, #fae8ea 100%);
+  }
 }

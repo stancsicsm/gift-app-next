@@ -6,6 +6,7 @@ import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import Label from "@/components/Label/Label";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import { type Gift, mockGifts } from "@/mock-data/mockGifts";
+import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
 
 const GiftPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -51,7 +52,7 @@ const GiftPageContent = ({ gift }: { gift: Gift | undefined }) => {
         <ViewGiftButton link={gift.link} />
         <Button
           size="large"
-          variant={gift.reservedBy === "me" ? "danger" : "primary"}
+          variant={getGiftButtonVariant(gift.reservedBy)}
           disabled={gift.reservedBy === "other"}
           className="w-full mt-auto shadow-sm"
         >
@@ -77,8 +78,8 @@ const ImageOrPlaceholderWithPrice = ({
       {price && (
         <div
           className={clsx(
-            "badge badge-primary badge-lg",
-            " absolute bottom-4 right-4",
+            "badge badge-primary badge-lg bg-primary-gradient border-0",
+            "absolute bottom-4 right-4",
             "font-semibold shadow-sm",
           )}
         >
