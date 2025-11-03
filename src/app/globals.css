@@ -65,4 +65,35 @@
   .bg-danger-gradient {
     background: linear-gradient(135deg, #fdd9df 0%, #fae8ea 100%);
   }
+
+  /* Single rotation animation */
+  @keyframes spin-once {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-once {
+    animation: spin-once 0.8s ease-in-out;
+  }
+
+  /* Single bounce animation */
+  @keyframes bounce-once {
+    0%,
+    100% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(25%);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  .animate-bounce-once {
+    animation: bounce-once 0.8s ease-in-out;
+  }
 }

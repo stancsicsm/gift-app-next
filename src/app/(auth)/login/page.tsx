@@ -1,12 +1,35 @@
+"use client";
+
+import clsx from "clsx";
 import { Gift, Mail } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
 
 const LoginPage = () => {
+  const [isAnimationActive, setIsAnimationActive] = useState(false);
+
+  const handleGiftClick = () => {
+    setIsAnimationActive(true);
+    setTimeout(() => setIsAnimationActive(false), 800); // Reset after animation duration
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: it should only run once on mount
+  useEffect(() => {
+    handleGiftClick();
+  }, []);
+
   return (
     <div className="flex flex-col p-4 gap-4">
-      <div className="w-fit mx-auto mt-4 p-3 bg-secondary rounded-full">
+      <div
+        className={clsx(
+          "w-fit mx-auto mt-4 p-3 bg-secondary rounded-full",
+          isAnimationActive &&
+            (Math.random() < 0.5 ? "animate-spin-once" : "animate-bounce-once"),
+        )}
+        onClick={handleGiftClick}
+      >
         <Gift size="40" className="text-primary" />
       </div>
       <Label size="xx-large" weight="semi-bold" className="my-4 text-center">
