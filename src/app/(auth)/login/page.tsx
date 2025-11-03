@@ -1,11 +1,14 @@
 import { Gift, Mail } from "lucide-react";
+import Link from "next/link";
 import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
 
 const LoginPage = () => {
   return (
     <div className="flex flex-col p-4 gap-4">
-      <Gift size="80" className="mx-auto text-primary mt-8" />
+      <div className="w-fit mx-auto mt-4 p-3 bg-secondary rounded-full">
+        <Gift size="40" className="text-primary" />
+      </div>
       <Label size="xx-large" weight="semi-bold" className="my-4 text-center">
         Welcome Back!
       </Label>
@@ -60,7 +63,9 @@ const LoginPage = () => {
       <div className="divider">OR</div>
       <div className="flex flex-row gap-1 justify-center">
         <Label>Don't have an account?</Label>
-        <Label className="link link-primary text-right">Sign up</Label>{" "}
+        <Link href="/register">
+          <Label className="link link-primary text-right">Sign up</Label>
+        </Link>
       </div>
     </div>
   );
