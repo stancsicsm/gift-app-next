@@ -1,14 +1,16 @@
 "use client";
 
 import clsx from "clsx";
-import { Gift, Mail } from "lucide-react";
+import { CircleX, Gift, Mail } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
+import loginAction from "@/services/auth/loginAction";
 
 const LoginPage = () => {
   const [isAnimationActive, setIsAnimationActive] = useState(false);
+  const [state, formAction, pending] = useActionState(loginAction, null);
 
   const handleGiftClick = () => {
     setIsAnimationActive(true);
@@ -36,53 +38,71 @@ const LoginPage = () => {
         Welcome Back!
       </Label>
 
-      <div>
-        <Label size="large" className="pb-2">
-          Email Address
-        </Label>
-        <label className="input input-lg validator w-full">
-          <Mail />
-          <input type="email" placeholder="email@example.com" required />
-        </label>
-        <div className="validator-hint hidden badge badge-xl badge-error">
-          <Label className="text-error-content">
-            Please enter a valid email address
-          </Label>
+      {state?.error && (
+        <div className="flex flex-row gap-2 alert alert-error rounded-full">
+          <CircleX />
+          <Label className="text-error-content">{state.error}</Label>
         </div>
-      </div>
+      )}
 
-      {/* TODO: add show password toggle */}
-      <div>
-        <Label size="large" className="pb-2">
-          Password
-        </Label>
-        <label className="input input-lg validator w-full">
-          <Mail />
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            minLength={1}
-          />
-        </label>
-        <div className="validator-hint hidden badge badge-xl badge-error">
-          <Label className="text-error-content">
-            Please enter your password
+      <form action={formAction}>
+        <div>
+          <Label size="large" className="pb-2">
+            Email Address
           </Label>
+          <label className="input input-lg validator w-full">
+            <Mail />
+            <input
+              name="email"
+              type="email"
+              placeholder="email@example.com"
+              required
+            />
+          </label>
+          <div className="validator-hint hidden badge badge-xl badge-error">
+            <Label className="text-error-content">
+              Please enter a valid email address
+            </Label>
+          </div>
         </div>
-      </div>
 
-      <Label className="link link-primary text-right">
-        Forgot your password?
-      </Label>
+        {/* TODO: add show password toggle */}
+        <div>
+          <Label size="large" className="pb-2">
+            Password
+          </Label>
+          <label className="input input-lg validator w-full">
+            <Mail />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+              minLength={1}
+            />
+          </label>
+          <div className="validator-hint hidden badge badge-xl badge-error">
+            <Label className="text-error-content">
+              Please enter your password
+            </Label>
+          </div>
+        </div>
 
-      <Button
-        size="large"
-        variant="primary-gradient"
-        className="w-full my-4 shadow-sm"
-      >
-        Login
-      </Button>
+        <Label className="link link-primary text-right">
+          Forgot your password?
+        </Label>
+
+        <Button
+          type="submit"
+          size="large"
+          variant="primary-gradient"
+          className="w-full my-4 shadow-sm"
+          disabled={pending}
+        >
+          {pending ? "Logging in..." : "Login"}
+        </Button>
+      </form>
+
       <div className="divider">OR</div>
       <div className="flex flex-row gap-1 justify-center">
         <Label>Don't have an account?</Label>
