@@ -1,0 +1,53 @@
+import { cookies } from "next/headers";
+
+type RequestOptions = RequestInit & {
+  isServer?: boolean;
+};
+
+/**
+ * API client that handles cookie forwarding for authenticated requests
+ * @param endpoint - API endpoint (e.g., "/user/profile")
+ * @param options - Fetch options
+ * @returns Fetch response
+ */
+export const apiClient = async (
+  endpoint: string,
+  options: RequestOptions = {},
+) => {
+  const { isServer = true, ...fetchOptions } = options;
+
+  const baseURL = process.env.NEXT_PUBLIC_API_URL;
+  const url = `${baseURL}${endpoint}`;
+
+  const defaultOptions: RequestInit = {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  };
+
+  // For server-side requests, forward cookies
+  if (isServer && typeof window === "undefined") {
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get("jwt");
+
+    console.log(
+      `[apiClient] ${endpoint} - JWT cookie:`,
+      jwt ? "Found" : "NOT FOUND",
+    );
+
+    if (jwt) {
+      defaultOptions.headers = {
+        ...defaultOptions.headers,
+        Cookie: `jwt=${jwt.value}`,
+      };
+      console.log(`[apiClient] ${endpoint} - Forwarding JWT cookie`);
+    } else {
+      console.log(`[apiClient] ${endpoint} - No JWT cookie to forward`);
+    }
+  }
+
+  console.log(`[apiClient] Calling ${url}`);
+  return fetch(url, { ...defaultOptions, ...fetchOptions });
+};
