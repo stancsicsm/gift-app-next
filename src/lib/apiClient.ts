@@ -32,22 +32,14 @@ export const apiClient = async (
     const cookieStore = await cookies();
     const jwt = cookieStore.get("jwt");
 
-    console.log(
-      `[apiClient] ${endpoint} - JWT cookie:`,
-      jwt ? "Found" : "NOT FOUND",
-    );
-
     if (jwt) {
       defaultOptions.headers = {
         ...defaultOptions.headers,
         Cookie: `jwt=${jwt.value}`,
       };
-      console.log(`[apiClient] ${endpoint} - Forwarding JWT cookie`);
     } else {
-      console.log(`[apiClient] ${endpoint} - No JWT cookie to forward`);
     }
   }
 
-  console.log(`[apiClient] Calling ${url}`);
   return fetch(url, { ...defaultOptions, ...fetchOptions });
 };

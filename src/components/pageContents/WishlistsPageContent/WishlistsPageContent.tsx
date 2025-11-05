@@ -6,8 +6,8 @@ import GiftCard from "@/components/GiftCard/GiftCard";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import GiftRequesterFilter from "@/components/GiftRequesterFilter/GiftRequesterFilter";
 import GiftReservedFilter from "@/components/GiftReservedFilter/GiftReservedFilter";
-import type { Gift } from "@/mock-data/mockGifts";
 import { mockUsers } from "@/mock-data/mockUsers";
+import type { Gift } from "@/services/gifts/gift.types";
 import { getUserNameById } from "@/utils/get-user-name-by-id";
 
 type WishlistsPageContentProps = {
@@ -23,7 +23,7 @@ const WishlistsPageContent = ({ gifts }: WishlistsPageContentProps) => {
   const giftsToDisplay = gifts
     .filter((gift) => (showFreeGiftsOnly ? !gift.reservedBy : true))
     .filter((gift) =>
-      selectedRequestedById ? gift.requestedBy === selectedRequestedById : true,
+      selectedRequestedById ? gift.createdBy === selectedRequestedById : true,
     );
 
   return (
@@ -41,10 +41,10 @@ const WishlistsPageContent = ({ gifts }: WishlistsPageContentProps) => {
       {giftsToDisplay.map((gift) => (
         <Link key={gift.id} href={`/gift/${gift.id}`}>
           <GiftCard
-            title={gift.title}
-            requestedByName={getUserNameById(mockUsers, gift.requestedBy)}
+            title={gift.name}
+            requestedByName={getUserNameById(mockUsers, gift.createdBy)}
             reservedBy={gift.reservedBy}
-            imageSrc={gift.imageSrc}
+            imageSrc={undefined}
           />
         </Link>
       ))}

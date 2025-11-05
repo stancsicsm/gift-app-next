@@ -1,24 +1,41 @@
 import { z } from "zod";
 
-export const GiftSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  requestedBy: z.number(),
-  reservedBy: z.number(),
-  imageSrc: z.string().optional(),
-  description: z.string().optional(),
-  price: z.number().optional(),
-  link: z.string().optional(),
-});
+export const ReservedByOptions = z.enum(["me", "other"]);
+export type ReservedByOptions = z.infer<typeof ReservedByOptions>;
 
-export const GiftDtoSchema = z.object({
+export const Gift = z.object({
   id: z.number(),
-  title: z.string(),
-  requested_by: z.number(),
-  reserved_by: z.enum(["me", "other"]).nullable(),
-  image_src: z.string().optional(),
-  description: z.string().optional(),
-  price: z.number().positive().optional(),
-  link: z.string().optional(),
+  name: z.string(),
+  price: z.number().optional(),
+  createdBy: z.number(),
+  reservedBy: ReservedByOptions.nullable(),
+  // imageSrc: z.string().optional(),
+  // description: z.string().optional(),
+  // link: z.string().optional(),
 });
-export type GiftDto = z.infer<typeof GiftDtoSchema>;
+export type Gift = z.infer<typeof Gift>;
+
+export const GiftDto = z.object({
+  id: z.number(),
+  name: z.string(),
+  price: z.number().nonnegative().nullable(),
+  created_by: z.number(),
+  reserved_by: ReservedByOptions.nullable(),
+  created_at: z.string(),
+  updated_at: z.string(),
+  reserved_at: z.string().nullable(),
+  // image_src: z.string().optional(),
+  // description: z.string().optional(),
+  // link: z.string().optional(),
+});
+export type GiftDto = z.infer<typeof GiftDto>;
+
+export const mapGiftDtoToDomain = (giftDto: GiftDto): Gift => {
+  return {
+    id: giftDto.id,
+    name: giftDto.name,
+    price: giftDto.price ?? undefined,
+    createdBy: giftDto.created_by,
+    reservedBy: giftDto.reserved_by,
+  };
+};

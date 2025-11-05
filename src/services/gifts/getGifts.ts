@@ -1,4 +1,5 @@
 import { apiClient } from "@/lib/apiClient";
+import { GiftDto, mapGiftDtoToDomain } from "@/services/gifts/gift.types";
 
 export const getGifts = async () => {
   const response = await apiClient("/gifts", {
@@ -10,6 +11,7 @@ export const getGifts = async () => {
     throw new Error(`Failed to fetch gifts: ${response.status} - ${errorText}`);
   }
 
-  const gifts = await response.json();
-  return gifts;
+  const giftsResponse = await response.json();
+  const giftsDto = GiftDto.array().parse(giftsResponse.gifts);
+  return giftsDto.map(mapGiftDtoToDomain);
 };
