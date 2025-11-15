@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient";
-import { GiftDto, mapGiftDtoToDomain } from "@/services/gifts/gift.types";
+import { Gift } from "@/services/gifts/gift.types";
 
 export const getGifts = async () => {
   const response = await apiClient("/gifts", {
@@ -12,6 +12,5 @@ export const getGifts = async () => {
   }
 
   const giftsResponse = await response.json();
-  const giftsDto = GiftDto.array().parse(giftsResponse.gifts);
-  return giftsDto.map(mapGiftDtoToDomain);
+  return Gift.array().parse(giftsResponse.gifts);
 };
