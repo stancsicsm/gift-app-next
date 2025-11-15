@@ -6,6 +6,7 @@ import { useActionState } from "react";
 import Button from "@/components/Button/Button";
 import ErrorLabel from "@/components/ErrorLabel/ErrorLabel";
 import LinkInput from "@/components/Form/LinkInput/LinkInput";
+import NumberInput from "@/components/Form/NumberInput/NumberInput";
 import TextInput from "@/components/Form/TextInput/TextInput";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import { newGiftAction } from "@/services/gifts/newGiftAction";
@@ -54,6 +55,12 @@ const NewGiftPageContent = () => {
             placeholder="e.g., A thrilling mystery novel"
             required={false}
             formData={state?.payload}
+          />
+          <NumberInput
+            label="Price"
+            name="price"
+            placeholder="e.g., 25"
+            required={false}
           />
           <LinkInput formData={state?.payload} />
         </div>
