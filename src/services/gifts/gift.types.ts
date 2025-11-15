@@ -6,7 +6,7 @@ export type ReservedByOptions = z.infer<typeof ReservedByOptions>;
 export const Gift = z.object({
   id: z.number(),
   name: z.string(),
-  price: z.number().optional(),
+  price: z.number().nullable(),
   description: z.string().nullable(),
   link: z.string().nullable(),
   createdBy: z.number(),

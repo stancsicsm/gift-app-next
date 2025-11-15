@@ -12,5 +12,5 @@ export const getGifts = async () => {
   }
 
   const giftsResponse = await response.json();
-  return Gift.array().parse(giftsResponse.gifts);
+  return Gift.array().parse(giftsResponse.data);
 };

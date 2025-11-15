@@ -5,13 +5,15 @@ import Button from "@/components/Button/Button";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import Label from "@/components/Label/Label";
 import PageTitle from "@/components/PageTitle/PageTitle";
-import { type Gift, mockGifts } from "@/mock-data/mockGifts";
+import { getGift } from "@/services/gifts/getGift";
+import { Gift } from "@/services/gifts/gift.types";
 import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
 
 const GiftPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
+  const giftId = parseInt(id, 10);
 
-  const gift = mockGifts.find((gift) => gift.id === Number(id));
+  const gift = isNaN(giftId) ? undefined : await getGift({ giftId });
 
   return (
     <div className="flex flex-col h-screen">
@@ -33,20 +35,21 @@ const GiftPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
 export default GiftPage;
 
-const GiftPageContent = ({ gift }: { gift: Gift | undefined }) => {
+type GiftPageContentProps = {
+  gift?: Gift;
+};
+
+const GiftPageContent = ({ gift }: GiftPageContentProps) => {
   if (!gift) {
     return <GiftMessage message="Gift not found" />;
   }
+
   return (
     <div className="flex flex-col flex-1">
-      <ImageOrPlaceholderWithPrice
-        title={gift.title}
-        imageSrc={gift.imageSrc}
-        price={gift.price}
-      />
+      <ImageOrPlaceholderWithPrice name={gift.name} price={gift.price} />
       <div className="flex flex-col flex-1 p-4 pb-8 gap-4">
         <Label size="xx-large" weight="semi-bold">
-          {gift.title}
+          {gift.name}
         </Label>
         {gift.description && <Label subtle>{gift.description}</Label>}
         <ViewGiftButton link={gift.link} />
@@ -64,18 +67,20 @@ const GiftPageContent = ({ gift }: { gift: Gift | undefined }) => {
 };
 
 const ImageOrPlaceholderWithPrice = ({
-  title,
-  imageSrc,
+  name,
   price,
-}: Pick<Gift, "title" | "imageSrc" | "price">) => {
+}: Pick<Gift, "name" | "price">) => {
+  // TODO: replace with actual image source when available
+  const imageSrc = undefined;
+
   return (
     <div className="relative">
       <img
         src={imageSrc ?? "/gift-placeholder.svg"}
-        alt={title}
+        alt={name}
         className="w-full h-[250px] object-cover"
       />
-      {price && (
+      {price !== null && (
         <div
           className={clsx(
             "badge badge-primary badge-lg bg-primary-gradient border-0",
