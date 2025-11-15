@@ -39,7 +39,7 @@ const WishlistsPageContent = ({ gifts }: WishlistsPageContentProps) => {
       />
 
       {giftsToDisplay.map((gift) => (
-        <Link key={gift.id} href={`/gift/${gift.id}`}>
+        <Link key={gift.id} href={`/gifts/${gift.id}`}>
           <GiftCard
             title={gift.name}
             requestedByName={getUserNameById(mockUsers, gift.createdBy)}

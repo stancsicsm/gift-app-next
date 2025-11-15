@@ -13,7 +13,7 @@ const WishlistsPage = async () => {
       <PageTitle
         title="Gift Wishes"
         rightSlot={
-          <Link href="/gift/new">
+          <Link href="/gifts/new">
             <Button variant="ghost">
               <Plus />
             </Button>
