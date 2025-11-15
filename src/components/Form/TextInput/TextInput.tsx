@@ -1,47 +1,50 @@
-import { KeyRound } from "lucide-react";
+import type { ReactNode } from "react";
 import Label from "@/components/Label/Label";
 
-type PasswordInputProps = {
-  label?: string;
-  name?: string;
-  placeholder?: string;
+type TextInputProps = {
+  label: string;
+  name: string;
+  placeholder: string;
   errorMessage?: string;
+  required: boolean;
+  iconSlot?: ReactNode;
   formData?: FormData;
 };
 
-const PasswordInput = ({
-  label = "Password",
-  name = "password",
-  placeholder = "Password",
-  errorMessage = "Please enter your password",
+const TextInput = ({
+  label,
+  name,
+  placeholder,
+  errorMessage,
+  required,
+  iconSlot,
   formData,
-}: PasswordInputProps) => {
+}: TextInputProps) => {
   const defaultValue = formData?.get(name);
   const validDefaultValue =
     typeof defaultValue === "string" ? defaultValue : undefined;
 
   return (
-    // TODO: add show password toggle
     <div>
       <Label size="large" className="pb-1">
         {label}
       </Label>
       <label className="input input-lg validator w-full">
-        <KeyRound />
+        {iconSlot}
         <input
           name={name}
-          type="password"
+          type="text"
           placeholder={placeholder}
-          required
+          required={required}
           minLength={1}
           defaultValue={validDefaultValue}
         />
       </label>
-      <div className="validator-hint hidden badge badge-xl badge-error">
-        <Label className="text-error-content">{errorMessage}</Label>
-      </div>
+      <p className="validator-hint hidden text-error-content text-base">
+        {errorMessage}
+      </p>
     </div>
   );
 };
 
-export default PasswordInput;
+export default TextInput;

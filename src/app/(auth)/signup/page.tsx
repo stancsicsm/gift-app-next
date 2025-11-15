@@ -1,15 +1,16 @@
 "use client";
 
+import { User } from "lucide-react";
 import Link from "next/link";
 import { useActionState } from "react";
-import AuthPageError from "@/app/(auth)/_components/AuthPageError/AuthPageError";
 import AuthPageHeader from "@/app/(auth)/_components/AuthPageHeader/AuthPageHeader";
-import EmailInput from "@/app/(auth)/_components/EmailInput/EmailInput";
-import NameInput from "@/app/(auth)/_components/NameInput/NameInput";
-import PasswordInput from "@/app/(auth)/_components/PasswordInput/PasswordInput";
 import Button from "@/components/Button/Button";
+import ErrorLabel from "@/components/ErrorLabel/ErrorLabel";
+import EmailInput from "@/components/Form/EmailInput/EmailInput";
+import PasswordInput from "@/components/Form/PasswordInput/PasswordInput";
+import TextInput from "@/components/Form/TextInput/TextInput";
 import Label from "@/components/Label/Label";
-import signupAction from "@/services/auth/signupAction";
+import { signupAction } from "@/services/auth/signupAction";
 
 const SignUpPage = () => {
   const [state, formAction, pending] = useActionState(signupAction, null);
@@ -17,11 +18,19 @@ const SignUpPage = () => {
   return (
     <div className="flex flex-col p-4 gap-4">
       <AuthPageHeader title="Create Account" />
-      <AuthPageError errorMessage={state?.error} />
+      <ErrorLabel errorMessage={state?.error} />
 
       <form action={formAction}>
         <div className="flex flex-col gap-2">
-          <NameInput formData={state?.payload} />
+          <TextInput
+            label="Name"
+            name="name"
+            placeholder="Your Name"
+            errorMessage="Please enter your name"
+            required={true}
+            iconSlot={<User />}
+            formData={state?.payload}
+          />
           <EmailInput formData={state?.payload} />
           <PasswordInput formData={state?.payload} />
           <PasswordInput
@@ -40,7 +49,7 @@ const SignUpPage = () => {
           className="w-full my-4 shadow-sm"
           disabled={pending}
         >
-          {pending ? "Signing up..." : "Sign Up"}
+          Sign Up
         </Button>
       </form>
 

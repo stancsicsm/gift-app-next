@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import AuthPageError from "@/app/(auth)/_components/AuthPageError/AuthPageError";
 import AuthPageHeader from "@/app/(auth)/_components/AuthPageHeader/AuthPageHeader";
-import EmailInput from "@/app/(auth)/_components/EmailInput/EmailInput";
-import PasswordInput from "@/app/(auth)/_components/PasswordInput/PasswordInput";
 import Button from "@/components/Button/Button";
+import ErrorLabel from "@/components/ErrorLabel/ErrorLabel";
+import EmailInput from "@/components/Form/EmailInput/EmailInput";
+import PasswordInput from "@/components/Form/PasswordInput/PasswordInput";
 import Label from "@/components/Label/Label";
-import loginAction from "@/services/auth/loginAction";
+import { loginAction } from "@/services/auth/loginAction";
 
 const LoginPage = () => {
   const [state, formAction, pending] = useActionState(loginAction, null);
@@ -16,7 +16,7 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col p-4 gap-4">
       <AuthPageHeader title="Welcome Back" />
-      <AuthPageError errorMessage={state?.error} />
+      <ErrorLabel errorMessage={state?.error} />
 
       <form action={formAction}>
         <div className="flex flex-col gap-2">
@@ -35,7 +35,7 @@ const LoginPage = () => {
           className="w-full my-4 shadow-sm"
           disabled={pending}
         >
-          {pending ? "Logging in..." : "Login"}
+          Login
         </Button>
       </form>
 

@@ -25,11 +25,9 @@ const EmailInput = ({ formData }: EmailInputProps) => {
           defaultValue={validDefaultValue}
         />
       </label>
-      <div className="validator-hint hidden badge badge-xl badge-error">
-        <Label className="text-error-content">
-          Please enter a valid email address
-        </Label>
-      </div>
+      <p className="validator-hint hidden text-error-content text-base">
+        Please enter a valid email address
+      </p>
     </div>
   );
 };

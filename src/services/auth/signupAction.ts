@@ -7,7 +7,7 @@ type SignupState = {
   payload?: FormData;
 } | null;
 
-const signupAction = async (
+export const signupAction = async (
   _prevState: SignupState,
   formData: FormData,
 ): Promise<SignupState> => {
@@ -65,5 +65,3 @@ const signupAction = async (
 
   redirect("/login");
 };
-
-export default signupAction;

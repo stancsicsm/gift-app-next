@@ -5,7 +5,7 @@ type AuthPageErrorProps = {
   errorMessage?: string;
 };
 
-const AuthPageError = ({ errorMessage }: AuthPageErrorProps) => {
+const ErrorLabel = ({ errorMessage }: AuthPageErrorProps) => {
   if (!errorMessage) {
     return null;
   }
@@ -18,4 +18,4 @@ const AuthPageError = ({ errorMessage }: AuthPageErrorProps) => {
   );
 };
 
-export default AuthPageError;
+export default ErrorLabel;

@@ -8,7 +8,7 @@ type LoginState = {
   payload?: FormData;
 } | null;
 
-const loginAction = async (
+export const loginAction = async (
   _prevState: LoginState,
   formData: FormData,
 ): Promise<LoginState> => {
@@ -77,5 +77,3 @@ const loginAction = async (
 
   redirect("/");
 };
-
-export default loginAction;
