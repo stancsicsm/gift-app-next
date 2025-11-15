@@ -37,7 +37,6 @@ export const apiClient = async (
         ...defaultOptions.headers,
         Cookie: `jwt=${jwt.value}`,
       };
-    } else {
     }
   }
 

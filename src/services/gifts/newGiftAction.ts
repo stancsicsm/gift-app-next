@@ -1,5 +1,7 @@
 "use server";
 
+import { apiClient } from "@/lib/apiClient";
+
 type NewGiftState = {
   error?: string;
   payload?: FormData;
@@ -19,11 +21,9 @@ export const newGiftAction = async (
   }
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gifts`, {
+    const response = await apiClient("/gifts", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, description, price, link }),
-      credentials: "include",
       cache: "no-store",
     });
 
@@ -37,7 +37,7 @@ export const newGiftAction = async (
         };
       }
       return {
-        error: "Something went wrong. Please try again.",
+        error: `Something went wrong. Please try again. ${errorData.error ? `Details: ${errorData.error}` : ""}`,
         payload: formData,
       };
     }
