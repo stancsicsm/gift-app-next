@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 type SignupState = {
   error?: string;
+  payload?: FormData;
 } | null;
 
 const signupAction = async (
@@ -21,11 +22,11 @@ const signupAction = async (
     typeof password !== "string" ||
     typeof confirmPassword !== "string"
   ) {
-    return { error: "Invalid form submission" };
+    return { error: "Invalid form submission", payload: formData };
   }
 
   if (password !== confirmPassword) {
-    return { error: "Passwords do not match" };
+    return { error: "Passwords do not match", payload: formData };
   }
 
   try {
@@ -44,13 +45,22 @@ const signupAction = async (
       const errorData = await response.json().catch(() => ({}));
 
       if (response.status === 400) {
-        return { error: errorData.message || "Invalid signup data" };
+        return {
+          error: `Error: ${errorData.error}` || "Invalid signup data",
+          payload: formData,
+        };
       }
-      return { error: "Something went wrong. Please try again." };
+      return {
+        error: "Something went wrong. Please try again.",
+        payload: formData,
+      };
     }
   } catch (error) {
     console.log("Signup error:", error);
-    return { error: "Something went wrong. Please try again." };
+    return {
+      error: "Something went wrong. Please try again.",
+      payload: formData,
+    };
   }
 
   redirect("/login");

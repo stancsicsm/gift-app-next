@@ -13,6 +13,7 @@ import signupAction from "@/services/auth/signupAction";
 
 const SignUpPage = () => {
   const [state, formAction, pending] = useActionState(signupAction, null);
+
   return (
     <div className="flex flex-col p-4 gap-4">
       <AuthPageHeader title="Create Account" />
@@ -20,14 +21,15 @@ const SignUpPage = () => {
 
       <form action={formAction}>
         <div className="flex flex-col gap-2">
-          <NameInput />
-          <EmailInput />
-          <PasswordInput />
+          <NameInput formData={state?.payload} />
+          <EmailInput formData={state?.payload} />
+          <PasswordInput formData={state?.payload} />
           <PasswordInput
             label="Confirm Password"
             name="confirmPassword"
             placeholder="Confirm Password"
             errorMessage="Passwords must match"
+            formData={state?.payload}
           />
         </div>
 

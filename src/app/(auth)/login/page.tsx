@@ -20,8 +20,8 @@ const LoginPage = () => {
 
       <form action={formAction}>
         <div className="flex flex-col gap-2">
-          <EmailInput />
-          <PasswordInput />
+          <EmailInput formData={state?.payload} />
+          <PasswordInput formData={state?.payload} />
         </div>
 
         <Label className="link link-primary text-right">

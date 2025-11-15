@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 type LoginState = {
   error?: string;
+  payload?: FormData;
 } | null;
 
 const loginAction = async (
@@ -15,7 +16,7 @@ const loginAction = async (
   const password = formData.get("password");
 
   if (typeof email !== "string" || typeof password !== "string") {
-    return { error: "Invalid form submission" };
+    return { error: "Invalid form submission", payload: formData };
   }
 
   try {
@@ -34,12 +35,18 @@ const loginAction = async (
       const errorData = await response.json().catch(() => ({}));
 
       if (response.status === 400) {
-        return { error: errorData.message || "Invalid email or password" };
+        return {
+          error: errorData.error || "Invalid email or password",
+          payload: formData,
+        };
       }
       if (response.status === 401) {
-        return { error: "Invalid email or password" };
+        return { error: "Invalid email or password", payload: formData };
       }
-      return { error: "Something went wrong. Please try again." };
+      return {
+        error: "Something went wrong. Please try again.",
+        payload: formData,
+      };
     }
 
     // Extract JWT from Set-Cookie header and set it in Next.js
@@ -62,7 +69,10 @@ const loginAction = async (
     }
   } catch (error) {
     console.error("Login error:", error);
-    return { error: "Something went wrong. Please try again." };
+    return {
+      error: "Something went wrong. Please try again.",
+      payload: formData,
+    };
   }
 
   redirect("/");
