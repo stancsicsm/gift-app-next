@@ -1,8 +1,8 @@
 "use client";
 
-import { CircleX } from "lucide-react";
 import Link from "next/link";
 import { useActionState } from "react";
+import AuthPageError from "@/app/(auth)/_components/AuthPageError/AuthPageError";
 import AuthPageHeader from "@/app/(auth)/_components/AuthPageHeader/AuthPageHeader";
 import EmailInput from "@/app/(auth)/_components/EmailInput/EmailInput";
 import PasswordInput from "@/app/(auth)/_components/PasswordInput/PasswordInput";
@@ -16,13 +16,7 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col p-4 gap-4">
       <AuthPageHeader title="Welcome Back" />
-
-      {state?.error && (
-        <div className="flex flex-row gap-2 alert alert-error rounded-full">
-          <CircleX />
-          <Label className="text-error-content">{state.error}</Label>
-        </div>
-      )}
+      <AuthPageError errorMessage={state?.error} />
 
       <form action={formAction}>
         <div className="flex flex-col gap-2">

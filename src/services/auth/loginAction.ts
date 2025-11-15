@@ -62,7 +62,7 @@ const loginAction = async (
     }
   } catch (error) {
     console.error("Login error:", error);
-    return { error: "Network error. Please try again." };
+    return { error: "Something went wrong. Please try again." };
   }
 
   redirect("/");
