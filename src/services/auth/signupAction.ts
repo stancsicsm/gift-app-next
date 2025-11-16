@@ -63,5 +63,5 @@ export const signupAction = async (
     };
   }
 
-  redirect("/login");
+  redirect("/login?success=true");
 };

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useActionState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import AuthPageHeader from "@/app/(auth)/_components/AuthPageHeader/AuthPageHeader";
 import Button from "@/components/Button/Button";
@@ -13,12 +14,24 @@ import { loginAction } from "@/services/auth/loginAction";
 
 const LoginPage = () => {
   const [state, formAction, pending] = useActionState(loginAction, null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const success = searchParams.get("success");
+  const hasShownToast = useRef(false);
 
   useEffect(() => {
     if (state?.error) {
       toast.error(state.error);
     }
   }, [state]);
+
+  useEffect(() => {
+    if (success === "true" && !hasShownToast.current) {
+      hasShownToast.current = true;
+      toast.success("Account created successfully!");
+      router.replace("/login");
+    }
+  }, [success, router]);
 
   return (
     <div className="flex flex-col p-4 gap-4">
