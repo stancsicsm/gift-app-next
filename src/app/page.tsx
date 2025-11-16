@@ -6,7 +6,7 @@ import WishlistsPageContent from "@/components/pageContents/WishlistsPageContent
 import { getGifts } from "@/services/gifts/getGifts";
 
 const WishlistsPage = async () => {
-  const gifts = await getGifts();
+  const gifts = await getGifts({});
 
   return (
     <div className="flex flex-col items-center justify-center p-4 gap-4">

@@ -1,30 +1,31 @@
-"use client";
-
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
-import { toast } from "react-hot-toast";
+import { Plus } from "lucide-react";
+import Link from "next/link";
+import OwnGiftsPageContent from "@/app/gifts/own/_OwnGiftsPageContent/OwnGiftsPageContent";
+import Button from "@/components/Button/Button";
+import PageTitle from "@/components/PageTitle/PageTitle";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
+import { getGifts } from "@/services/gifts/getGifts";
 
-const MyGiftsPage = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const success = searchParams.get("success");
-  const hasShownToast = useRef(false);
-
-  useEffect(() => {
-    if (success === "true" && !hasShownToast.current) {
-      hasShownToast.current = true;
-      toast.success("Gift added successfully!");
-      router.replace("/gifts/own");
-    }
-  }, [success, router]);
+const OwnGiftsPage = async () => {
+  const gifts = await getGifts({ filter: "own" });
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center p-4 gap-4">
       <StyledToaster />
-      Own Gifts Page
+      <PageTitle
+        title="Own Gift Wishes"
+        rightSlot={
+          <Link href="/gifts/new">
+            <Button variant="ghost" size="small">
+              <Plus />
+            </Button>
+          </Link>
+        }
+        className="pb-4"
+      />
+      <OwnGiftsPageContent gifts={gifts} />
     </div>
   );
 };
 
-export default MyGiftsPage;
+export default OwnGiftsPage;
