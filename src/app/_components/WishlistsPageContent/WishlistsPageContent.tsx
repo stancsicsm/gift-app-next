@@ -44,7 +44,6 @@ const WishlistsPageContent = ({ gifts }: WishlistsPageContentProps) => {
             title={gift.name}
             requestedByName={getUserNameById(mockUsers, gift.createdBy)}
             reservedBy={gift.reservedBy}
-            imageSrc={undefined}
           />
         </Link>
       ))}
