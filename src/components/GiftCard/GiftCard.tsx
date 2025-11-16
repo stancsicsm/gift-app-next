@@ -1,14 +1,15 @@
-import clsx from "clsx";
+import type { ReactNode } from "react";
 import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
 import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
 
 type GiftCardProps = {
   title: string;
-  requestedByName: string;
+  requestedByName?: string;
   reservedBy: "me" | "other" | null;
   imageSrc?: string;
   onButtonClick?: () => void;
+  buttonSlot?: ReactNode;
 };
 
 const GiftCard = ({
@@ -17,6 +18,7 @@ const GiftCard = ({
   reservedBy,
   imageSrc,
   onButtonClick,
+  buttonSlot,
 }: GiftCardProps) => {
   return (
     <div className="card flex-row w-full bg-base-200 shadow-sm">
@@ -27,7 +29,7 @@ const GiftCard = ({
           className="w-[100px] h-[100px] rounded-xl"
         />
       </figure>
-      <div className={clsx("card-body p-4 pl-0 min-w-0 flex-1")}>
+      <div className="card-body p-4 pl-0 min-w-0 flex-1">
         <div className="flex flex-col gap-0.5">
           <Label size="large" weight="semi-bold" noLineBreak>
             {title}
@@ -42,13 +44,17 @@ const GiftCard = ({
           className="card-actions mt-auto"
           onClick={(e) => e.preventDefault()}
         >
-          <Button
-            onClick={onButtonClick}
-            variant={getGiftButtonVariant(reservedBy)}
-            disabled={reservedBy === "other"}
-          >
-            {reservedBy === "me" ? "Cancel" : "Reserve"}
-          </Button>
+          {buttonSlot ? (
+            buttonSlot
+          ) : (
+            <Button
+              onClick={onButtonClick}
+              variant={getGiftButtonVariant(reservedBy)}
+              disabled={reservedBy === "other"}
+            >
+              {reservedBy === "me" ? "Cancel" : "Reserve"}
+            </Button>
+          )}
         </div>
       </div>
     </div>

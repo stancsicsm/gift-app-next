@@ -4,12 +4,11 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
+import Button from "@/components/Button/Button";
 import GiftCard from "@/components/GiftCard/GiftCard";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
-import { mockUsers } from "@/mock-data/mockUsers";
 import type { Gift } from "@/services/gifts/gift.types";
-import { getUserNameById } from "@/utils/get-user-name-by-id";
 
 type OwnGiftsPageProps = {
   gifts: Gift[];
@@ -38,9 +37,8 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
           {/*TODO: modify card to contain the edit button*/}
           <GiftCard
             title={gift.name}
-            requestedByName={getUserNameById(mockUsers, gift.createdBy)}
             reservedBy={gift.reservedBy}
-            imageSrc={undefined}
+            buttonSlot={<OwnGiftButtons />}
           />
         </Link>
       ))}
@@ -52,3 +50,12 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
 };
 
 export default OwnGiftsPageContent;
+
+const OwnGiftButtons = () => {
+  return (
+    <div className="flex flex-row gap-2">
+      <Button variant="secondary">Edit</Button>
+      <Button variant="danger-gradient">Delete</Button>
+    </div>
+  );
+};
