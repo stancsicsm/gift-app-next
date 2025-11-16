@@ -1,4 +1,7 @@
-import { KeyRound } from "lucide-react";
+"use client";
+
+import { Eye, EyeOff, KeyRound } from "lucide-react";
+import { useState } from "react";
 import Label from "@/components/Label/Label";
 
 type PasswordInputProps = {
@@ -16,12 +19,13 @@ const PasswordInput = ({
   errorMessage = "Please enter your password",
   formData,
 }: PasswordInputProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const defaultValue = formData?.get(name);
   const validDefaultValue =
     typeof defaultValue === "string" ? defaultValue : undefined;
 
   return (
-    // TODO: add show password toggle
     <div>
       <Label size="large" className="pb-1">
         {label}
@@ -30,12 +34,20 @@ const PasswordInput = ({
         <KeyRound />
         <input
           name={name}
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder={placeholder}
           required
           minLength={1}
           defaultValue={validDefaultValue}
         />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="cursor-pointer"
+          aria-label={showPassword ? "Hide password" : "Show password"}
+        >
+          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+        </button>
       </label>
       <p className="validator-hint hidden text-error-content text-base">
         {errorMessage}
