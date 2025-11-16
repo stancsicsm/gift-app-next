@@ -53,7 +53,7 @@ export const newGiftAction = async (
       };
     }
   } catch (error) {
-    console.log("New gift error:", error);
+    console.error("New gift error:", error);
     return {
       error: "Something went wrong. Please try again.",
       payload: formData,

@@ -2,13 +2,14 @@
 
 import { X } from "lucide-react";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import Button from "@/components/Button/Button";
-import ErrorLabel from "@/components/ErrorLabel/ErrorLabel";
 import LinkInput from "@/components/Form/LinkInput/LinkInput";
 import NumberInput from "@/components/Form/NumberInput/NumberInput";
 import TextInput from "@/components/Form/TextInput/TextInput";
 import PageTitle from "@/components/PageTitle/PageTitle";
+import StyledToaster from "@/components/StyledToaster/StyledToaster";
 import { newGiftAction } from "@/services/gifts/newGiftAction";
 
 const NewGiftPage = () => {
@@ -35,9 +36,15 @@ export default NewGiftPage;
 const NewGiftPageContent = () => {
   const [state, formAction, pending] = useActionState(newGiftAction, null);
 
+  useEffect(() => {
+    if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state]);
+
   return (
     <div className="flex flex-col gap-4 w-full">
-      <ErrorLabel errorMessage={state?.error} />
+      <StyledToaster />
 
       <form action={formAction}>
         <div className="flex flex-col gap-2">

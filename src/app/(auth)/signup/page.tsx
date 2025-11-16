@@ -2,23 +2,30 @@
 
 import { User } from "lucide-react";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import AuthPageHeader from "@/app/(auth)/_components/AuthPageHeader/AuthPageHeader";
 import Button from "@/components/Button/Button";
-import ErrorLabel from "@/components/ErrorLabel/ErrorLabel";
 import EmailInput from "@/components/Form/EmailInput/EmailInput";
 import PasswordInput from "@/components/Form/PasswordInput/PasswordInput";
 import TextInput from "@/components/Form/TextInput/TextInput";
 import Label from "@/components/Label/Label";
+import StyledToaster from "@/components/StyledToaster/StyledToaster";
 import { signupAction } from "@/services/auth/signupAction";
 
 const SignUpPage = () => {
   const [state, formAction, pending] = useActionState(signupAction, null);
 
+  useEffect(() => {
+    if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state]);
+
   return (
     <div className="flex flex-col p-4 gap-4">
+      <StyledToaster />
       <AuthPageHeader title="Create Account" />
-      <ErrorLabel errorMessage={state?.error} />
 
       <form action={formAction}>
         <div className="flex flex-col gap-2">
