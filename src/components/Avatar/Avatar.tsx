@@ -6,25 +6,44 @@ type AvatarProps = {
   imageSrc?: string;
   active?: boolean;
   onClick?: () => void;
+  size?: "medium" | "large";
 };
 
-const Avatar = ({ name, imageSrc, active, onClick }: AvatarProps) => {
+const Avatar = ({
+  name,
+  imageSrc,
+  active,
+  onClick,
+  size = "medium",
+}: AvatarProps) => {
   return (
     <div
-      className="flex flex-col items-center justify-center gap-1.5"
+      className={clsx(
+        "flex flex-col items-center justify-center",
+        size === "medium" ? "gap-1.5" : "gap-3",
+      )}
       onClick={onClick}
     >
       <div className={clsx("avatar", { "avatar-placeholder": !imageSrc })}>
         <div
-          className={clsx("w-18 rounded-full", {
-            "ring-primary ring-3 ring-offset-3": active,
-            "bg-neutral": !imageSrc,
-          })}
+          className={clsx(
+            "rounded-full shadow-sm",
+            size === "medium" ? "w-18" : "w-28",
+            {
+              "ring-primary ring-3 ring-offset-3": active,
+              "bg-secondary": !imageSrc,
+            },
+          )}
         >
-          <ImageOrPlaceholder name={name} imageSrc={imageSrc} />
+          <ImageOrPlaceholder name={name} imageSrc={imageSrc} size={size} />
         </div>
       </div>
-      <Label size="small" weight="semi-bold" subtle noLineBreak>
+      <Label
+        size={size === "medium" ? "small" : "large"}
+        weight="semi-bold"
+        subtle={size === "medium"}
+        noLineBreak
+      >
         {name}
       </Label>
     </div>
@@ -36,14 +55,17 @@ export default Avatar;
 const ImageOrPlaceholder = ({
   name,
   imageSrc,
-}: Pick<AvatarProps, "name" | "imageSrc">) => {
+  size = "medium",
+}: Pick<AvatarProps, "name" | "imageSrc" | "size">) => {
   if (imageSrc) {
     return <img src={imageSrc} alt={name} />;
   }
 
   return (
-    <div className="text-base-100">
-      <span className="text-3xl">{name.charAt(0).toUpperCase()}</span>
+    <div className="text-primary">
+      <span className={clsx(size === "large" ? "text-5xl" : "text-3xl")}>
+        {name.charAt(0).toUpperCase()}
+      </span>
     </div>
   );
 };

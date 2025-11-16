@@ -14,7 +14,6 @@ const StyledToaster = () => (
           primary: "#198109",
           secondary: "#afd89e",
         },
-        duration: 4000,
       },
       error: {
         style: {
@@ -26,7 +25,6 @@ const StyledToaster = () => (
           primary: "#f43f5e",
           secondary: "#fdd9df",
         },
-        duration: 4000,
       },
     }}
   />
