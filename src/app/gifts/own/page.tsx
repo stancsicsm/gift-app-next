@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import OwnGiftsPageContent from "@/app/gifts/own/_OwnGiftsPageContent/OwnGiftsPageContent";
+import OwnGiftsPageContent from "@/app/gifts/own/_components/OwnGiftsPageContent/OwnGiftsPageContent";
 import Button from "@/components/Button/Button";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
