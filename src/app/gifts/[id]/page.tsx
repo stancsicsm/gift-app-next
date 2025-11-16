@@ -11,9 +11,9 @@ import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
 
 const GiftPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const giftId = parseInt(id, 10);
+  const giftId = Number(id);
 
-  const gift = Number.isNaN(giftId) ? undefined : await getGift({ giftId });
+  const gift = isNaN(giftId) ? undefined : await getGift({ giftId });
 
   return (
     <div className="flex flex-col h-screen">

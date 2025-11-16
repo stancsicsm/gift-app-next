@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
 
 type NewGiftState = {
@@ -20,10 +21,20 @@ export const newGiftAction = async (
     return { error: "Gift name is required", payload: formData };
   }
 
+  const body = {
+    name,
+    description:
+      typeof description === "string" && description.trim() !== ""
+        ? description
+        : undefined,
+    price: price && !isNaN(Number(price)) ? Number(price) : undefined,
+    link: typeof link === "string" && link.trim() !== "" ? link : undefined,
+  };
+
   try {
     const response = await apiClient("/gifts", {
       method: "POST",
-      body: JSON.stringify({ name, description, price, link }),
+      body: JSON.stringify(body),
       cache: "no-store",
     });
 
@@ -49,5 +60,5 @@ export const newGiftAction = async (
     };
   }
 
-  return null;
+  redirect("/gifts/own");
 };
