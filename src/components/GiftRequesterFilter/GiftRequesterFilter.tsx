@@ -1,5 +1,5 @@
 import Avatar from "@/components/Avatar/Avatar";
-import type { User } from "@/mock-data/mockUsers";
+import type { User } from "@/services/users/user.types";
 
 type GiftRequesterFilterProps = {
   users: User[];
@@ -23,7 +23,8 @@ const GiftRequesterFilter = ({
         <Avatar
           key={user.id ?? "all"}
           name={user.name}
-          imageSrc={user.imageSrc}
+          // TODO: add image when available
+          imageSrc={undefined}
           active={user.id === selectedRequestedById}
           onClick={() => setSelectedRequestedById(user.id)}
         />

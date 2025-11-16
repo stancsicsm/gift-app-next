@@ -7,16 +7,17 @@ import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import GiftRequesterFilter from "@/components/GiftRequesterFilter/GiftRequesterFilter";
 import GiftReservedFilter from "@/components/GiftReservedFilter/GiftReservedFilter";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
-import { mockUsers } from "@/mock-data/mockUsers";
 import type { Gift } from "@/services/gifts/gift.types";
+import type { User } from "@/services/users/user.types";
 import { getUserNameById } from "@/utils/get-user-name-by-id";
 import { handleGiftReservation } from "@/utils/handle-gift-reservation";
 
 type WishlistsPageContentProps = {
   gifts: Gift[];
+  users: User[];
 };
 
-const WishlistsPageContent = ({ gifts }: WishlistsPageContentProps) => {
+const WishlistsPageContent = ({ gifts, users }: WishlistsPageContentProps) => {
   const [showFreeGiftsOnly, setShowFreeGiftsOnly] = useState(false);
   const [selectedRequestedById, setSelectedRequestedById] = useState<
     number | null
@@ -33,7 +34,7 @@ const WishlistsPageContent = ({ gifts }: WishlistsPageContentProps) => {
       <StyledToaster />
 
       <GiftRequesterFilter
-        users={mockUsers}
+        users={users}
         selectedRequestedById={selectedRequestedById}
         setSelectedRequestedById={setSelectedRequestedById}
       />
@@ -46,7 +47,7 @@ const WishlistsPageContent = ({ gifts }: WishlistsPageContentProps) => {
         <Link key={gift.id} href={`/gifts/${gift.id}`}>
           <GiftCard
             title={gift.name}
-            requestedByName={getUserNameById(mockUsers, gift.createdBy)}
+            requestedByName={getUserNameById(users, gift.createdBy)}
             reservedBy={gift.reservedBy}
             onButtonClick={() =>
               handleGiftReservation(gift.id, gift.reservedBy)

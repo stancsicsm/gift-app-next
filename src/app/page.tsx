@@ -4,9 +4,11 @@ import WishlistsPageContent from "@/app/_components/WishlistsPageContent/Wishlis
 import Button from "@/components/Button/Button";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import { getGifts } from "@/services/gifts/getGifts";
+import { getUsers } from "@/services/users/getUsers";
 
 const WishlistsPage = async () => {
   const gifts = await getGifts({});
+  const users = await getUsers();
 
   return (
     <div className="flex flex-col items-center justify-center p-4 gap-4">
@@ -21,7 +23,7 @@ const WishlistsPage = async () => {
         }
         className="pb-4"
       />
-      <WishlistsPageContent gifts={gifts} />
+      <WishlistsPageContent gifts={gifts} users={users} />
     </div>
   );
 };
