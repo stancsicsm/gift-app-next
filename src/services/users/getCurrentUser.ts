@@ -2,7 +2,7 @@ import { apiClient } from "@/lib/apiClient";
 import { User } from "@/services/users/user.types";
 
 export const getCurrentUser = async () => {
-  const response = await apiClient("/users/me", {
+  const response = await apiClient("/users/current", {
     cache: "no-store",
   });
 
