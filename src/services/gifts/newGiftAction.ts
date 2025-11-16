@@ -60,5 +60,5 @@ export const newGiftAction = async (
     };
   }
 
-  redirect("/gifts/own");
+  redirect("/gifts/own?success=true");
 };
