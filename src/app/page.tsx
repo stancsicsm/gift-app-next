@@ -7,7 +7,7 @@ import { getGifts } from "@/services/gifts/getGifts";
 import { getUsers } from "@/services/users/getUsers";
 
 const WishlistsPage = async () => {
-  const gifts = await getGifts({});
+  const gifts = await getGifts({ filter: "others" });
   const users = await getUsers();
 
   return (

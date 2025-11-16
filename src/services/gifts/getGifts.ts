@@ -2,7 +2,7 @@ import { apiClient } from "@/lib/apiClient";
 import { Gift } from "@/services/gifts/gift.types";
 
 type GetGiftsParams = {
-  filter?: "own" | "my_reservations";
+  filter?: "own" | "others" | "my_reservations";
 };
 
 export const getGifts = async ({ filter }: GetGiftsParams) => {
