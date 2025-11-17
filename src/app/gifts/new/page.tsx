@@ -5,12 +5,10 @@ import Link from "next/link";
 import { useActionState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Button from "@/components/Button/Button";
-import LinkInput from "@/components/Form/LinkInput/LinkInput";
-import NumberInput from "@/components/Form/NumberInput/NumberInput";
-import TextInput from "@/components/Form/TextInput/TextInput";
+import GiftForm from "@/components/Form/GiftForm/GiftForm";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
-import { newGiftAction } from "@/services/gifts/newGiftAction";
+import { createOrEditGiftAction } from "@/services/gifts/createOrEditGiftAction";
 
 const NewGiftPage = () => {
   return (
@@ -34,7 +32,10 @@ const NewGiftPage = () => {
 export default NewGiftPage;
 
 const NewGiftPageContent = () => {
-  const [state, formAction, pending] = useActionState(newGiftAction, null);
+  const [state, formAction, pending] = useActionState(
+    createOrEditGiftAction.bind(null, "create", null),
+    null,
+  );
 
   useEffect(() => {
     if (state?.error) {
@@ -45,43 +46,11 @@ const NewGiftPageContent = () => {
   return (
     <div className="flex flex-col gap-4 w-full">
       <StyledToaster />
-
-      <form action={formAction}>
-        <div className="flex flex-col gap-2">
-          <TextInput
-            label="Gift Name"
-            name="name"
-            placeholder="e.g., A new book"
-            errorMessage="Please enter the gift name"
-            required={true}
-            formData={state?.payload}
-          />
-          <TextInput
-            label="Description"
-            name="description"
-            placeholder="e.g., A thrilling mystery novel"
-            required={false}
-            formData={state?.payload}
-          />
-          <NumberInput
-            label="Price"
-            name="price"
-            placeholder="e.g., 25"
-            required={false}
-          />
-          <LinkInput formData={state?.payload} />
-        </div>
-
-        <Button
-          type="submit"
-          size="large"
-          variant="primary-gradient"
-          className="w-full my-4 shadow-sm"
-          disabled={pending}
-        >
-          Save Gift
-        </Button>
-      </form>
+      <GiftForm
+        action={formAction}
+        formData={state?.payload}
+        pending={pending}
+      />
     </div>
   );
 };

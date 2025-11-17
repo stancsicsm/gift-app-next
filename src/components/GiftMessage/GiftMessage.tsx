@@ -7,7 +7,7 @@ type GiftMessageProps = {
 
 const GiftMessage = ({ message }: GiftMessageProps) => {
   return (
-    <div className="flex flex-col items-center justify-center pt-8 gap-2">
+    <div className="flex flex-col items-center justify-center text-center pt-8 px-8 gap-2">
       <Gift
         size={64}
         // accent-content color

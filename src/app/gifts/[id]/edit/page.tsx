@@ -1,12 +1,12 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import GiftDetailPageContent from "@/app/gifts/[id]/_components/GiftDetailPageContent";
+import EditGiftPageContent from "@/app/gifts/[id]/edit/_components/EditGiftPageContent/EditGiftPageContent";
 import Button from "@/components/Button/Button";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import { getGift } from "@/services/gifts/getGift";
 import { getCurrentUser } from "@/services/users/getCurrentUser";
 
-const GiftDetailPage = async ({
+const EditGiftPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -18,21 +18,21 @@ const GiftDetailPage = async ({
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col items-center justify-center p-4 gap-4">
       <PageTitle
-        title="Gift Wish"
+        title="Edit Gift"
         leftSlot={
-          <Link href="/">
+          <Link href={`/gifts/${giftId}`}>
             <Button variant="ghost" size="small">
               <ArrowLeft />
             </Button>
           </Link>
         }
-        className="p-4"
+        className="pb-4"
       />
-      <GiftDetailPageContent gift={gift} currentUser={currentUser} />
+      <EditGiftPageContent gift={gift} currentUser={currentUser} />
     </div>
   );
 };
 
-export default GiftDetailPage;
+export default EditGiftPage;

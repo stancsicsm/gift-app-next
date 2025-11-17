@@ -2,22 +2,27 @@
 
 import clsx from "clsx";
 import { ChevronRight, ExternalLink } from "lucide-react";
+import Link from "next/link";
 import Button from "@/components/Button/Button";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import Label from "@/components/Label/Label";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
 import type { Gift } from "@/services/gifts/gift.types";
+import type { User } from "@/services/users/user.types";
 import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
 import { handleGiftReservation } from "@/utils/handle-gift-reservation";
 
 type GiftPageContentProps = {
   gift?: Gift;
+  currentUser: User;
 };
 
-const GiftDetailPageContent = ({ gift }: GiftPageContentProps) => {
+const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
   if (!gift) {
     return <GiftMessage message="Gift not found" />;
   }
+
+  const isOwner = currentUser.id === gift.createdBy;
 
   return (
     <div className="flex flex-col flex-1">
@@ -30,15 +35,28 @@ const GiftDetailPageContent = ({ gift }: GiftPageContentProps) => {
         </Label>
         {gift.description && <Label subtle>{gift.description}</Label>}
         <ViewGiftButton link={gift.link} />
-        <Button
-          size="large"
-          variant={getGiftButtonVariant(gift.reservedBy)}
-          disabled={gift.reservedBy === "other"}
-          className="w-full mt-auto shadow-sm"
-          onClick={() => handleGiftReservation(gift.id, gift.reservedBy)}
-        >
-          {gift.reservedBy === "me" ? "Cancel Reservation" : "Reserve Gift"}
-        </Button>
+        <div className="flex flex-col gap-2 mt-8">
+          {isOwner && (
+            <Link href={`/gifts/${gift.id}/edit`}>
+              <Button
+                variant="secondary"
+                size="large"
+                className="w-full shadow-sm"
+              >
+                Edit Gift
+              </Button>
+            </Link>
+          )}
+          <Button
+            size="large"
+            variant={getGiftButtonVariant(gift.reservedBy)}
+            disabled={gift.reservedBy === "other"}
+            className="w-full shadow-sm"
+            onClick={() => handleGiftReservation(gift.id, gift.reservedBy)}
+          >
+            {gift.reservedBy === "me" ? "Cancel Reservation" : "Reserve Gift"}
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -8,7 +8,9 @@ type NewGiftState = {
   payload?: FormData;
 } | null;
 
-export const newGiftAction = async (
+export const createOrEditGiftAction = async (
+  createOrEdit: "create" | "edit",
+  giftId: number | null,
   _prevState: NewGiftState,
   formData: FormData,
 ): Promise<NewGiftState> => {
@@ -27,16 +29,19 @@ export const newGiftAction = async (
       typeof description === "string" && description.trim() !== ""
         ? description
         : undefined,
-    price: price && !isNaN(Number(price)) ? Number(price) : undefined,
+    price: price && !Number.isNaN(Number(price)) ? Number(price) : undefined,
     link: typeof link === "string" && link.trim() !== "" ? link : undefined,
   };
 
   try {
-    const response = await apiClient("/gifts", {
-      method: "POST",
-      body: JSON.stringify(body),
-      cache: "no-store",
-    });
+    const response = await apiClient(
+      createOrEdit === "edit" && giftId ? `/gifts/${giftId}` : "/gifts",
+      {
+        method: giftId ? "PATCH" : "POST",
+        body: JSON.stringify(body),
+        cache: "no-store",
+      },
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -53,7 +58,10 @@ export const newGiftAction = async (
       };
     }
   } catch (error) {
-    console.error("New gift error:", error);
+    console.error(
+      `Error while ${createOrEdit === "create" ? "creating" : "editing"} gift:`,
+      error,
+    );
     return {
       error: "Something went wrong. Please try again.",
       payload: formData,

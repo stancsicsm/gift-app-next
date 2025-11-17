@@ -34,11 +34,10 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
 
       {gifts.map((gift) => (
         <Link key={gift.id} href={`/gifts/${gift.id}`}>
-          {/*TODO: modify card to contain the edit button*/}
           <GiftCard
             title={gift.name}
             reservedBy={gift.reservedBy}
-            buttonSlot={<OwnGiftButtons />}
+            buttonSlot={<OwnGiftButtons giftId={gift.id} />}
           />
         </Link>
       ))}
@@ -51,10 +50,12 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
 
 export default OwnGiftsPageContent;
 
-const OwnGiftButtons = () => {
+const OwnGiftButtons = ({ giftId }: { giftId: number }) => {
   return (
     <div className="flex flex-row gap-2">
-      <Button variant="secondary">Edit</Button>
+      <Link href={`/gifts/${giftId}/edit`}>
+        <Button variant="secondary">Edit</Button>
+      </Link>
       <Button variant="danger-gradient">Delete</Button>
     </div>
   );
