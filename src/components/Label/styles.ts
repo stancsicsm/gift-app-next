@@ -7,6 +7,7 @@ export const getLabelStyles = ({
   weight = "regular",
 }: Pick<LabelProps, "size" | "subtle" | "weight">) => {
   const sizeClasses = {
+    "x-small": "text-xs",
     small: "text-sm",
     medium: "text-base",
     large: "text-lg",

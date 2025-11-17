@@ -4,7 +4,7 @@ import Label from "@/components/Label/Label";
 
 const Footer = () => {
   return (
-    <footer className="footer footer-center p-4 pt-12">
+    <footer className="footer footer-center px-4 pt-12 pb-24">
       <aside>
         <Image src={footerLogoSrc} alt="Footer Logo" className="w-16 h-auto" />
         <Label subtle>Developed by Pocok és Társa</Label>
