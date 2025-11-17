@@ -18,7 +18,7 @@ type WishlistsPageContentProps = {
 };
 
 const WishlistsPageContent = ({ gifts, users }: WishlistsPageContentProps) => {
-  const [showFreeGiftsOnly, setShowFreeGiftsOnly] = useState(false);
+  const [showFreeGiftsOnly, setShowFreeGiftsOnly] = useState(true);
   const [selectedRequestedById, setSelectedRequestedById] = useState<
     number | null
   >(null);
