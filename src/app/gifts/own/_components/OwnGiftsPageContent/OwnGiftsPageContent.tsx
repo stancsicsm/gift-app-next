@@ -8,6 +8,7 @@ import Button from "@/components/Button/Button";
 import GiftCard from "@/components/GiftCard/GiftCard";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
+import { deleteGiftAction } from "@/services/gifts/deleteGiftAction";
 import type { Gift } from "@/services/gifts/gift.types";
 
 type OwnGiftsPageProps = {
@@ -51,12 +52,23 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
 export default OwnGiftsPageContent;
 
 const OwnGiftButtons = ({ giftId }: { giftId: number }) => {
+  const handleDelete = async () => {
+    const result = await deleteGiftAction(giftId);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error);
+    }
+  };
+
   return (
     <div className="flex flex-row gap-2">
       <Link href={`/gifts/${giftId}/edit`}>
         <Button variant="secondary">Edit</Button>
       </Link>
-      <Button variant="danger-gradient">Delete</Button>
+      <Button variant="danger-gradient" onClick={handleDelete}>
+        Delete
+      </Button>
     </div>
   );
 };
