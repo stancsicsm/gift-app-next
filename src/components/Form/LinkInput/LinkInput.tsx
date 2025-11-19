@@ -14,7 +14,7 @@ const LinkInput = ({ formData }: TextInputProps) => {
       <Label size="large" className="pb-1">
         Link
       </Label>
-      <label className="input input-lg validator w-full">
+      <label className="input input-lg validator w-full rounded-xl">
         <input
           name="link"
           type="url"

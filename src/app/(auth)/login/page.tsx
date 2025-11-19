@@ -52,7 +52,7 @@ const LoginPage = () => {
           type="submit"
           size="large"
           variant="primary-gradient"
-          className="w-full my-4 shadow-sm"
+          className="w-full my-4 mt-8 shadow-sm"
           disabled={pending}
         >
           Login

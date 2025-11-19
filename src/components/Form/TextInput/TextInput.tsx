@@ -29,7 +29,7 @@ const TextInput = ({
       <Label size="large" className="pb-1">
         {label}
       </Label>
-      <label className="input input-lg validator w-full">
+      <label className="input input-lg validator w-full rounded-xl">
         {iconSlot}
         <input
           name={name}

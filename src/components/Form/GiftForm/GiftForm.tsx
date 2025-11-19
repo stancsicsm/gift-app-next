@@ -1,6 +1,7 @@
 import Button from "@/components/Button/Button";
 import LinkInput from "@/components/Form/LinkInput/LinkInput";
 import NumberInput from "@/components/Form/NumberInput/NumberInput";
+import TextArea from "@/components/Form/TextArea/TextArea";
 import TextInput from "@/components/Form/TextInput/TextInput";
 
 type GiftFormProps = {
@@ -20,11 +21,12 @@ const GiftForm = ({ action, formData, pending }: GiftFormProps) => (
         required={true}
         formData={formData}
       />
-      <TextInput
+      <TextArea
         label="Description"
         name="description"
         placeholder="e.g., A thrilling mystery novel"
         required={false}
+        rows={4}
         formData={formData}
       />
       <NumberInput
@@ -41,7 +43,7 @@ const GiftForm = ({ action, formData, pending }: GiftFormProps) => (
       type="submit"
       size="large"
       variant="primary-gradient"
-      className="w-full my-4 shadow-sm"
+      className="w-full my-4 mt-8 shadow-sm"
       disabled={pending}
     >
       Save Gift

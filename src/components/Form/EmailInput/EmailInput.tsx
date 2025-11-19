@@ -15,7 +15,7 @@ const EmailInput = ({ formData }: EmailInputProps) => {
       <Label size="large" className="pb-1">
         Email Address
       </Label>
-      <label className="input input-lg validator w-full">
+      <label className="input input-lg validator w-full rounded-xl">
         <Mail />
         <input
           name="email"
