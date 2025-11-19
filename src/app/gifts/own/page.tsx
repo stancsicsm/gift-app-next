@@ -1,7 +1,4 @@
-import { Plus } from "lucide-react";
-import Link from "next/link";
 import OwnGiftsPageContent from "@/app/gifts/own/_components/OwnGiftsPageContent/OwnGiftsPageContent";
-import Button from "@/components/Button/Button";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
 import { getGifts } from "@/services/gifts/getGifts";
@@ -12,17 +9,7 @@ const OwnGiftsPage = async () => {
   return (
     <div className="flex flex-col items-center justify-center p-4 gap-4">
       <StyledToaster />
-      <PageTitle
-        title="Own Gift Wishes"
-        rightSlot={
-          <Link href="/gifts/new">
-            <Button variant="ghost" size="small">
-              <Plus />
-            </Button>
-          </Link>
-        }
-        className="pb-4"
-      />
+      <PageTitle title="Own Gift Wishes" newGiftButton className="pb-4" />
       <OwnGiftsPageContent gifts={gifts} />
     </div>
   );

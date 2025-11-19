@@ -1,20 +1,27 @@
+"use client";
+
 import clsx from "clsx";
-import type { ReactNode } from "react";
+import { Plus, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
 import type { PropsWithClassName } from "@/utils/type-utils";
 
 type PageTitleProps = PropsWithClassName<{
   title: string;
-  leftSlot?: ReactNode;
-  rightSlot?: ReactNode;
+  backButton?: boolean;
+  newGiftButton?: boolean;
 }>;
 
 const PageTitle = ({
   title,
-  leftSlot,
-  rightSlot,
+  backButton = false,
+  newGiftButton = false,
   className,
 }: PageTitleProps) => {
+  const router = useRouter();
+
   return (
     <div
       className={clsx(
@@ -22,11 +29,25 @@ const PageTitle = ({
         className,
       )}
     >
-      <div className="flex-1 flex justify-start">{leftSlot}</div>
+      <div className="flex-1 flex justify-start">
+        {backButton && (
+          <Button variant="ghost" size="small" onClick={() => router.back()}>
+            <X />
+          </Button>
+        )}
+      </div>
       <Label size="x-large" weight="semi-bold">
         {title}
       </Label>
-      <div className="flex-1 flex justify-end">{rightSlot}</div>
+      <div className="flex-1 flex justify-end">
+        {newGiftButton && (
+          <Link href="/gifts/new">
+            <Button variant="ghost" size="small">
+              <Plus />
+            </Button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 };
