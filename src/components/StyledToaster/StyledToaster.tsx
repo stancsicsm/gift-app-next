@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 const StyledToaster = () => (
   <Toaster
     position="bottom-center"
+    containerClassName="mb-16"
     toastOptions={{
       success: {
         style: {
