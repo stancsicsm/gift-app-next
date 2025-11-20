@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
+import type { UploadedFile } from "@/services/upload/file.types";
 import { uploadAction } from "@/services/upload/uploadAction";
 
 type NewGiftState = {
@@ -25,6 +26,7 @@ export const createOrEditGiftAction = async (
     return { error: "Gift name is required", payload: formData };
   }
 
+  let uploadedFile: UploadedFile | undefined;
   if (image instanceof File && image.size > 0) {
     const uploadResult = await uploadAction(null, formData);
 
@@ -35,7 +37,7 @@ export const createOrEditGiftAction = async (
       };
     }
 
-    console.log("Uploaded filename:", uploadResult?.file?.filename);
+    uploadedFile = uploadResult?.file;
   }
 
   const body = {
@@ -46,8 +48,7 @@ export const createOrEditGiftAction = async (
         : undefined,
     price: price && !Number.isNaN(Number(price)) ? Number(price) : undefined,
     link: typeof link === "string" && link.trim() !== "" ? link : undefined,
-    // TODO: include imageUrl when backend supports it
-    // imageUrl: imageUrl, // Include the image URL if we have one
+    imageUrl: uploadedFile?.url,
   };
 
   try {

@@ -5,18 +5,18 @@ import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
 
 type GiftCardProps = {
   title: string;
+  imageUrl?: string;
   requestedByName?: string;
   reservedBy: "me" | "other" | null;
-  imageSrc?: string;
   onButtonClick?: () => void;
   buttonSlot?: ReactNode;
 };
 
 const GiftCard = ({
   title,
+  imageUrl,
   requestedByName,
   reservedBy,
-  imageSrc,
   onButtonClick,
   buttonSlot,
 }: GiftCardProps) => {
@@ -24,9 +24,9 @@ const GiftCard = ({
     <div className="card flex-row w-full bg-base-200 shadow-sm">
       <figure className="p-4">
         <img
-          src={imageSrc ?? "/gift-placeholder.svg"}
+          src={imageUrl ?? "/gift-placeholder.svg"}
           alt={title}
-          className="w-[100px] h-[100px] rounded-xl"
+          className="w-[100px] h-[100px] rounded-xl object-cover"
         />
       </figure>
       <div className="card-body p-4 pl-0 min-w-0 flex-1">

@@ -37,6 +37,7 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
         <Link key={gift.id} href={`/gifts/${gift.id}`}>
           <GiftCard
             title={gift.name}
+            imageUrl={gift.imageUrl ?? undefined}
             reservedBy={gift.reservedBy}
             buttonSlot={<OwnGiftButtons giftId={gift.id} />}
           />

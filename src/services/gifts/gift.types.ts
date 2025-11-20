@@ -9,11 +9,11 @@ export const Gift = z.object({
   price: z.number().nullable(),
   description: z.string().nullable(),
   link: z.string().nullable(),
+  imageUrl: z.string().nullable(),
   createdBy: z.number(),
   reservedBy: ReservedByOptions.nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
   reservedAt: z.string().nullable(),
-  // imageSrc: z.string().optional(),
 });
 export type Gift = z.infer<typeof Gift>;

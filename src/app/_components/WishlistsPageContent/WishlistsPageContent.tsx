@@ -47,6 +47,7 @@ const WishlistsPageContent = ({ gifts, users }: WishlistsPageContentProps) => {
         <Link key={gift.id} href={`/gifts/${gift.id}`}>
           <GiftCard
             title={gift.name}
+            imageUrl={gift.imageUrl ?? undefined}
             requestedByName={getUserNameById(users, gift.createdBy)}
             reservedBy={gift.reservedBy}
             onButtonClick={() =>

@@ -28,7 +28,11 @@ const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
     <div className="flex flex-col flex-1">
       <StyledToaster />
 
-      <ImageOrPlaceholderWithPrice name={gift.name} price={gift.price} />
+      <ImageOrPlaceholderWithPrice
+        name={gift.name}
+        price={gift.price}
+        imageUrl={gift.imageUrl}
+      />
       <div className="flex flex-col flex-1 p-4 pb-8 gap-4">
         <Label size="xx-large" weight="semi-bold">
           {gift.name}
@@ -67,31 +71,27 @@ export default GiftDetailPageContent;
 const ImageOrPlaceholderWithPrice = ({
   name,
   price,
-}: Pick<Gift, "name" | "price">) => {
-  // TODO: replace with actual image source when available
-  const imageSrc = undefined;
-
-  return (
-    <div className="relative">
-      <img
-        src={imageSrc ?? "/gift-placeholder.svg"}
-        alt={name}
-        className="w-full h-[250px] object-cover"
-      />
-      {price !== null && (
-        <div
-          className={clsx(
-            "badge badge-primary badge-lg bg-primary-gradient border-0",
-            "absolute bottom-4 right-4",
-            "font-semibold shadow-sm",
-          )}
-        >
-          {price} Ft
-        </div>
-      )}
-    </div>
-  );
-};
+  imageUrl,
+}: Pick<Gift, "name" | "price" | "imageUrl">) => (
+  <div className="relative">
+    <img
+      src={imageUrl ?? "/gift-placeholder.svg"}
+      alt={name}
+      className="w-full h-[250px] object-cover"
+    />
+    {price !== null && (
+      <div
+        className={clsx(
+          "badge badge-primary badge-lg bg-primary-gradient border-0",
+          "absolute bottom-4 right-4",
+          "font-semibold shadow-sm",
+        )}
+      >
+        {price} Ft
+      </div>
+    )}
+  </div>
+);
 
 const ViewGiftButton = ({ link }: Pick<Gift, "link">) => {
   if (!link) {
