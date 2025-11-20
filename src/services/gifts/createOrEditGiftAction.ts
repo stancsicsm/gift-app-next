@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
+import { uploadAction } from "@/services/upload/uploadAction";
 
 type NewGiftState = {
   error?: string;
@@ -18,9 +19,23 @@ export const createOrEditGiftAction = async (
   const description = formData.get("description");
   const price = formData.get("price");
   const link = formData.get("link");
+  const image = formData.get("image");
 
   if (typeof name !== "string" || name.trim() === "") {
     return { error: "Gift name is required", payload: formData };
+  }
+
+  if (image instanceof File && image.size > 0) {
+    const uploadResult = await uploadAction(null, formData);
+
+    if (uploadResult?.error) {
+      return {
+        error: uploadResult.error,
+        payload: formData,
+      };
+    }
+
+    console.log("Uploaded filename:", uploadResult?.file?.filename);
   }
 
   const body = {
@@ -31,6 +46,8 @@ export const createOrEditGiftAction = async (
         : undefined,
     price: price && !Number.isNaN(Number(price)) ? Number(price) : undefined,
     link: typeof link === "string" && link.trim() !== "" ? link : undefined,
+    // TODO: include imageUrl when backend supports it
+    // imageUrl: imageUrl, // Include the image URL if we have one
   };
 
   try {

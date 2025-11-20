@@ -19,10 +19,12 @@ export const apiClient = async (
   const baseURL = process.env.NEXT_PUBLIC_API_URL;
   const url = `${baseURL}${endpoint}`;
 
+  const isFormData = fetchOptions.body instanceof FormData;
+
   const defaultOptions: RequestInit = {
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...options.headers,
     },
   };
