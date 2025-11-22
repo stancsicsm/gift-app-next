@@ -1,4 +1,4 @@
-import ProfilePageContent from "@/app/profile/_component/ProfilePageContent";
+import ProfilePageContent from "@/app/profile/_components/ProfilePageContent";
 import PageTitle from "@/components/PageTitle/PageTitle";
 import { getCurrentUser } from "@/services/users/getCurrentUser";
 
@@ -10,12 +10,6 @@ const ProfilePage = async () => {
       <PageTitle title="My Profile" className="pb-4" />
       <ProfilePageContent user={currentUser} />
     </div>
-
-    // <form action={logoutAction}>
-    //   <Button variant="danger" type="submit">
-    //     Logout
-    //   </Button>
-    // </form>
   );
 };
 
