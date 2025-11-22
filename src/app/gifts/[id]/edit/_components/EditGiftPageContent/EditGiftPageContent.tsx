@@ -23,6 +23,7 @@ const EditGiftPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
     if (gift.price !== null)
       initialFormData.set("price", gift.price.toString());
     if (gift.link) initialFormData.set("link", gift.link);
+    if (gift.imageUrl) initialFormData.set("imageUrl", gift.imageUrl);
   }
 
   const [state, formAction, pending] = useActionState(
