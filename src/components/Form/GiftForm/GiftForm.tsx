@@ -1,5 +1,5 @@
 import Button from "@/components/Button/Button";
-import FileInput from "@/components/Form/FileInput/FileInput";
+import ImageUpload from "@/components/Form/ImageUpload/ImageUpload";
 import LinkInput from "@/components/Form/LinkInput/LinkInput";
 import NumberInput from "@/components/Form/NumberInput/NumberInput";
 import TextArea from "@/components/Form/TextArea/TextArea";
@@ -12,7 +12,7 @@ type GiftFormProps = {
 };
 
 const GiftForm = ({ action, formData, pending }: GiftFormProps) => (
-  <form action={action} encType="multipart/form-data">
+  <form action={action}>
     <div className="flex flex-col gap-2">
       <TextInput
         label="Gift Name"
@@ -38,7 +38,11 @@ const GiftForm = ({ action, formData, pending }: GiftFormProps) => (
         formData={formData}
       />
       <LinkInput formData={formData} />
-      <FileInput name="image" />
+      <ImageUpload
+        name="imageUrl"
+        label="Image"
+        defaultValue={formData?.get("imageUrl") as string}
+      />
     </div>
 
     <Button

@@ -2,8 +2,6 @@
 
 import { redirect } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
-import type { UploadedFile } from "@/services/upload/file.types";
-import { uploadAction } from "@/services/upload/uploadAction";
 
 type NewGiftState = {
   error?: string;
@@ -20,24 +18,10 @@ export const createOrEditGiftAction = async (
   const description = formData.get("description");
   const price = formData.get("price");
   const link = formData.get("link");
-  const image = formData.get("image");
+  const imageUrl = formData.get("imageUrl");
 
   if (typeof name !== "string" || name.trim() === "") {
     return { error: "Gift name is required", payload: formData };
-  }
-
-  let uploadedFile: UploadedFile | undefined;
-  if (image instanceof File && image.size > 0) {
-    const uploadResult = await uploadAction(null, formData);
-
-    if (uploadResult?.error) {
-      return {
-        error: uploadResult.error,
-        payload: formData,
-      };
-    }
-
-    uploadedFile = uploadResult?.file;
   }
 
   const body = {
@@ -48,7 +32,10 @@ export const createOrEditGiftAction = async (
         : undefined,
     price: price && !Number.isNaN(Number(price)) ? Number(price) : undefined,
     link: typeof link === "string" && link.trim() !== "" ? link : undefined,
-    imageUrl: uploadedFile?.url,
+    imageUrl:
+      typeof imageUrl === "string" && imageUrl.trim() !== ""
+        ? imageUrl
+        : undefined,
   };
 
   try {

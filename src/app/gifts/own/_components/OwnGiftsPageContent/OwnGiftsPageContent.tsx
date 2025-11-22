@@ -53,6 +53,8 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
 export default OwnGiftsPageContent;
 
 const OwnGiftButtons = ({ giftId }: { giftId: number }) => {
+  const router = useRouter();
+
   const handleDelete = async () => {
     const result = await deleteGiftAction(giftId);
     if (result.success) {
@@ -64,9 +66,14 @@ const OwnGiftButtons = ({ giftId }: { giftId: number }) => {
 
   return (
     <div className="flex flex-row gap-2">
-      <Link href={`/gifts/${giftId}/edit`}>
-        <Button variant="secondary">Edit</Button>
-      </Link>
+      <Button
+        variant="secondary"
+        onClick={() => {
+          router.push(`/gifts/${giftId}/edit`);
+        }}
+      >
+        Edit
+      </Button>
       <Button variant="danger-gradient" onClick={handleDelete}>
         Delete
       </Button>

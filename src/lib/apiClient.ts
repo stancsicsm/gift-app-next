@@ -1,5 +1,3 @@
-import { cookies } from "next/headers";
-
 type RequestOptions = RequestInit & {
   isServer?: boolean;
 };
@@ -31,6 +29,7 @@ export const apiClient = async (
 
   // For server-side requests, forward cookies
   if (isServer && typeof window === "undefined") {
+    const { cookies } = await import("next/headers");
     const cookieStore = await cookies();
     const jwt = cookieStore.get("jwt");
 
