@@ -7,7 +7,7 @@ const LoadingPage = () => {
         // primary color
         size="80"
         color="#4cabe6"
-        className="animate-spin"
+        className="animate-spin-elastic"
       />
     </div>
   );

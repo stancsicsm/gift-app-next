@@ -80,6 +80,10 @@
     animation: spin-once 0.8s ease-in-out;
   }
 
+  .animate-spin-elastic {
+    animation: spin-once 1.2s ease-in-out infinite;
+  }
+
   /* Single bounce animation */
   @keyframes bounce-once {
     0%,

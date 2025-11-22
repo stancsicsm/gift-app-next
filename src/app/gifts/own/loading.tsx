@@ -1,7 +1,7 @@
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 
-const GiftDetailPageLoading = () => {
+const OwnGiftsPageLoading = () => {
   return <LoadingPage />;
 };
 
-export default GiftDetailPageLoading;
+export default OwnGiftsPageLoading;
