@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { Plus, X } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button/Button";
@@ -32,7 +32,7 @@ const PageTitle = ({
       <div className="flex-1 flex justify-start">
         {backButton && (
           <Button variant="ghost" size="small" onClick={() => router.back()}>
-            <X />
+            <ArrowLeft />
           </Button>
         )}
       </div>

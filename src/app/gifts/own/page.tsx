@@ -9,7 +9,7 @@ const OwnGiftsPage = async () => {
   return (
     <div className="flex flex-col items-center justify-center p-4 gap-4">
       <StyledToaster />
-      <PageTitle title="Own Gift Wishes" newGiftButton className="pb-4" />
+      <PageTitle title="Own Gift Wishes" className="pb-4" />
       <OwnGiftsPageContent gifts={gifts} />
     </div>
   );

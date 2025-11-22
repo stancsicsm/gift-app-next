@@ -33,6 +33,10 @@ const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
     <div className="flex flex-col w-full gap-4">
       <StyledToaster />
 
+      <Link href="/gifts/new" className="ml-auto mb-4">
+        <Button variant="primary">New Gift</Button>
+      </Link>
+
       {gifts.map((gift) => (
         <Link key={gift.id} href={`/gifts/${gift.id}`}>
           <GiftCard
