@@ -1,8 +1,9 @@
 "use client";
 
+import clsx from "clsx";
 import { X } from "lucide-react";
 import Image from "next/image";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
@@ -19,6 +20,7 @@ const ImageUpload = ({ label, name, defaultValue }: ImageUploadProps) => {
     defaultValue,
   );
   const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -41,6 +43,10 @@ const ImageUpload = ({ label, name, defaultValue }: ImageUploadProps) => {
 
   const handleRemove = () => {
     setPreviewUrl(undefined);
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -70,17 +76,27 @@ const ImageUpload = ({ label, name, defaultValue }: ImageUploadProps) => {
             </Button>
           </div>
         ) : (
-          <div className="relative">
+          <div
+            className={clsx(
+              "relative flex flex-col items-center justify-center w-full rounded-xl aspect-video",
+              "border-1 border-dashed border-primary",
+              "cursor-pointer hover:bg-primary/10 active:bg-primary/10",
+            )}
+            onClick={handleUploadClick}
+          >
             <input
               type="file"
               id={name}
+              ref={fileInputRef}
               accept="image/*"
               onChange={handleFileChange}
               disabled={isUploading}
-              className="file-input w-full"
+              className="hidden"
             />
-            {isUploading && (
-              <span className="absolute inset-y-0 right-2 loading loading-spinner text-primary"></span>
+            {isUploading ? (
+              <span className="loading loading-spinner loading-lg text-primary"></span>
+            ) : (
+              <Button variant="primary-outline">Upload Image</Button>
             )}
           </div>
         )}

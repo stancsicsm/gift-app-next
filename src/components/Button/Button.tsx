@@ -6,6 +6,7 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?:
     | "primary"
     | "primary-gradient"
+    | "primary-outline"
     | "secondary"
     | "light"
     | "ghost"

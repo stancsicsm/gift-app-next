@@ -16,6 +16,8 @@ export const getButtonVariant = ({
         "btn-primary bg-primary-gradient border-0",
         GRADIENT_COMMON_CLASSES,
       );
+    case "primary-outline":
+      return "btn-primary btn-outline";
     case "secondary":
       return "btn-secondary";
     case "light":
