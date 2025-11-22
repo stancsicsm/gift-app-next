@@ -41,7 +41,7 @@ const GiftCard = ({
           )}
         </div>
         <div
-          className="card-actions mt-auto"
+          className="card-actions mt-auto w-fit"
           onClick={(e) => e.preventDefault()}
         >
           {buttonSlot ? (
