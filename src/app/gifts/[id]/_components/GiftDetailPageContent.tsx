@@ -8,6 +8,7 @@ import Button from "@/components/Button/Button";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import Label from "@/components/Label/Label";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
+import { useConfirmation } from "@/hooks/useConfirmation";
 import { deleteGiftAction } from "@/services/gifts/deleteGiftAction";
 import type { Gift } from "@/services/gifts/gift.types";
 import type { User } from "@/services/users/user.types";
@@ -20,11 +21,13 @@ type GiftPageContentProps = {
 };
 
 const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
+  const { confirm, ConfirmationDialog } = useConfirmation();
+
   if (!gift) {
     return <GiftMessage message="Gift not found" />;
   }
 
-  const handleDelete = async () => {
+  const deleteGift = async () => {
     const result = await deleteGiftAction(gift.id);
     if (result.success) {
       toast.success(result.message);
@@ -33,11 +36,21 @@ const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
     }
   };
 
+  const handleDelete = () => {
+    confirm({
+      title: "Delete Gift",
+      message: "Are you sure you want to delete this gift?",
+      confirmText: "Delete",
+      onConfirm: deleteGift,
+    });
+  };
+
   const isOwner = currentUser.id === gift.createdBy;
 
   return (
     <div className="flex flex-col flex-1">
       <StyledToaster />
+      <ConfirmationDialog />
 
       <ImageOrPlaceholderWithPrice
         name={gift.name}

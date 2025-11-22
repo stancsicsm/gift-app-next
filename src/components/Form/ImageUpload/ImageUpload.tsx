@@ -96,7 +96,9 @@ const ImageUpload = ({ label, name, defaultValue }: ImageUploadProps) => {
             {isUploading ? (
               <span className="loading loading-spinner loading-lg text-primary"></span>
             ) : (
-              <Button variant="primary-outline">Upload Image</Button>
+              <Button variant="primary" outline>
+                Upload Image
+              </Button>
             )}
           </div>
         )}

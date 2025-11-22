@@ -6,18 +6,19 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?:
     | "primary"
     | "primary-gradient"
-    | "primary-outline"
     | "secondary"
     | "light"
     | "ghost"
     | "danger"
     | "danger-gradient"
     | "disabled";
+  outline?: boolean;
   size?: "small" | "medium" | "large";
 };
 
 const Button = ({
   variant = "primary",
+  outline = false,
   size = "medium",
   children,
   className,
@@ -28,6 +29,7 @@ const Button = ({
       type="button"
       className={clsx(
         "btn",
+        outline && "btn-outline",
         getButtonVariant({ variant }),
         getButtonSize({ size }),
         className,

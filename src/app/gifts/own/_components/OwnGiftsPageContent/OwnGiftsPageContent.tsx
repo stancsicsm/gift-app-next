@@ -8,6 +8,7 @@ import Button from "@/components/Button/Button";
 import GiftCard from "@/components/GiftCard/GiftCard";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
+import { useConfirmation } from "@/hooks/useConfirmation";
 import { deleteGiftAction } from "@/services/gifts/deleteGiftAction";
 import type { Gift } from "@/services/gifts/gift.types";
 
@@ -58,8 +59,9 @@ export default OwnGiftsPageContent;
 
 const OwnGiftButtons = ({ giftId }: { giftId: number }) => {
   const router = useRouter();
+  const { confirm, ConfirmationDialog } = useConfirmation();
 
-  const handleDelete = async () => {
+  const deleteGift = async () => {
     const result = await deleteGiftAction(giftId);
     if (result.success) {
       toast.success(result.message);
@@ -68,19 +70,32 @@ const OwnGiftButtons = ({ giftId }: { giftId: number }) => {
     }
   };
 
+  const handleDelete = () => {
+    confirm({
+      title: "Delete Gift",
+      message: "Are you sure you want to delete this gift?",
+      confirmText: "Delete",
+      onConfirm: deleteGift,
+    });
+  };
+
   return (
-    <div className="flex flex-row gap-2">
-      <Button
-        variant="secondary"
-        onClick={() => {
-          router.push(`/gifts/${giftId}/edit`);
-        }}
-      >
-        Edit
-      </Button>
-      <Button variant="danger-gradient" onClick={handleDelete}>
-        Delete
-      </Button>
-    </div>
+    <>
+      <ConfirmationDialog />
+
+      <div className="flex flex-row gap-2">
+        <Button
+          variant="secondary"
+          onClick={() => {
+            router.push(`/gifts/${giftId}/edit`);
+          }}
+        >
+          Edit
+        </Button>
+        <Button variant="danger-gradient" onClick={handleDelete}>
+          Delete
+        </Button>
+      </div>
+    </>
   );
 };
