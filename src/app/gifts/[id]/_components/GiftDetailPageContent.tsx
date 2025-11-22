@@ -3,10 +3,12 @@
 import clsx from "clsx";
 import { ChevronRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 import Button from "@/components/Button/Button";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import Label from "@/components/Label/Label";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
+import { deleteGiftAction } from "@/services/gifts/deleteGiftAction";
 import type { Gift } from "@/services/gifts/gift.types";
 import type { User } from "@/services/users/user.types";
 import { getGiftButtonVariant } from "@/utils/get-gift-button-variant";
@@ -21,6 +23,15 @@ const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
   if (!gift) {
     return <GiftMessage message="Gift not found" />;
   }
+
+  const handleDelete = async () => {
+    const result = await deleteGiftAction(gift.id);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.error);
+    }
+  };
 
   const isOwner = currentUser.id === gift.createdBy;
 
@@ -39,27 +50,39 @@ const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
         </Label>
         {gift.description && <Label subtle>{gift.description}</Label>}
         <ViewGiftButton link={gift.link} />
-        <div className="flex flex-col gap-2 mt-8">
+        <div className="flex flex-col gap-3 mt-8">
           {isOwner && (
-            <Link href={`/gifts/${gift.id}/edit`}>
+            <>
+              <Link href={`/gifts/${gift.id}/edit`}>
+                <Button
+                  variant="secondary"
+                  size="large"
+                  className="shadow-sm w-full"
+                >
+                  Edit Gift
+                </Button>
+              </Link>
               <Button
-                variant="secondary"
+                variant="danger-gradient"
                 size="large"
-                className="w-full shadow-sm"
+                className="shadow-sm"
+                onClick={handleDelete}
               >
-                Edit Gift
+                Delete Gift
               </Button>
-            </Link>
+            </>
           )}
-          <Button
-            size="large"
-            variant={getGiftButtonVariant(gift.reservedBy)}
-            disabled={gift.reservedBy === "other"}
-            className="w-full shadow-sm"
-            onClick={() => handleGiftReservation(gift.id, gift.reservedBy)}
-          >
-            {gift.reservedBy === "me" ? "Cancel Reservation" : "Reserve Gift"}
-          </Button>
+          {!isOwner && (
+            <Button
+              size="large"
+              variant={getGiftButtonVariant(gift.reservedBy)}
+              disabled={gift.reservedBy === "other"}
+              className="shadow-sm"
+              onClick={() => handleGiftReservation(gift.id, gift.reservedBy)}
+            >
+              {gift.reservedBy === "me" ? "Cancel Reservation" : "Reserve Gift"}
+            </Button>
+          )}
         </div>
       </div>
     </div>
