@@ -5,6 +5,29 @@ const publicRoutes = ["/login", "/signup"];
 
 export default async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
+
+  // Proxy /api requests to the backend
+  if (path.startsWith("/api/")) {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    if (!apiUrl) {
+      return new NextResponse(
+        JSON.stringify({ error: "API URL not configured" }),
+        { status: 500, headers: { "content-type": "application/json" } },
+      );
+    }
+
+    const targetUrl = new URL(path.replace(/^\/api/, ""), apiUrl);
+
+    request.nextUrl.searchParams.forEach((value, key) => {
+      targetUrl.searchParams.append(key, value);
+    });
+
+    console.log(`[Proxy] Forwarding ${path} to ${targetUrl.toString()}`);
+
+    return NextResponse.rewrite(targetUrl);
+  }
+
   const isPublicRoute = publicRoutes.includes(path);
 
   const cookieStore = await cookies();
@@ -22,5 +45,5 @@ export default async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)", "/api/:path*"],
 };

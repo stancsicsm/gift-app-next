@@ -23,30 +23,14 @@ const RootLayout = ({
   children,
 }: Readonly<{
   children: ReactNode;
-}>) => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-
-  return (
-    <html lang="en" data-theme="wishlists">
-      <head>
-        <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: This script is used to inject environment variables into the global window object for client-side access
-          dangerouslySetInnerHTML={{
-            __html: `window.__ENV = { NEXT_PUBLIC_API_URL: ${JSON.stringify(
-              apiUrl,
-            )} };`,
-          }}
-        />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        <NavigationBar />
-        <Footer />
-      </body>
-    </html>
-  );
-};
+}>) => (
+  <html lang="en" data-theme="wishlists">
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {children}
+      <NavigationBar />
+      <Footer />
+    </body>
+  </html>
+);
 
 export default RootLayout;
