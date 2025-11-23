@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 
+import { getApiUrl } from "@/lib/env";
+
 type SignupState = {
   error?: string;
   payload?: FormData;
@@ -30,16 +32,13 @@ export const signupAction = async (
   }
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-        credentials: "include",
-        cache: "no-store",
-      },
-    );
+    const response = await fetch(`${getApiUrl()}/auth/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+      credentials: "include",
+      cache: "no-store",
+    });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));

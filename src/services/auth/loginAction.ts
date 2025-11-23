@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+import { getApiUrl } from "@/lib/env";
+
 type LoginState = {
   error?: string;
   payload?: FormData;
@@ -20,16 +22,13 @@ export const loginAction = async (
   }
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
-        cache: "no-store",
-      },
-    );
+    const response = await fetch(`${getApiUrl()}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+      credentials: "include",
+      cache: "no-store",
+    });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));

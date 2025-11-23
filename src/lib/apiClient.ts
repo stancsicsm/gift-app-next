@@ -1,3 +1,5 @@
+import { getApiUrl } from "./env";
+
 type RequestOptions = RequestInit & {
   isServer?: boolean;
 };
@@ -14,7 +16,7 @@ export const apiClient = async (
 ) => {
   const { isServer = true, ...fetchOptions } = options;
 
-  const baseURL = process.env.NEXT_PUBLIC_API_URL;
+  const baseURL = getApiUrl();
   const url = `${baseURL}${endpoint}`;
 
   const isFormData = fetchOptions.body instanceof FormData;
