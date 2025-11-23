@@ -1,8 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-
-import { getApiUrl } from "@/lib/env";
+import { apiClient } from "@/lib/apiClient";
 
 type SignupState = {
   error?: string;
@@ -32,11 +31,9 @@ export const signupAction = async (
   }
 
   try {
-    const response = await fetch(`${getApiUrl()}/auth/signup`, {
+    const response = await apiClient(`/auth/signup`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),
-      credentials: "include",
       cache: "no-store",
     });
 

@@ -23,8 +23,6 @@ export default async function proxy(request: NextRequest) {
       targetUrl.searchParams.append(key, value);
     });
 
-    console.log(`[Proxy] Forwarding ${path} to ${targetUrl.toString()}`);
-
     return NextResponse.rewrite(targetUrl);
   }
 

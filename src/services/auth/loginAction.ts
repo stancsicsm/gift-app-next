@@ -2,8 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-import { getApiUrl } from "@/lib/env";
+import { apiClient } from "@/lib/apiClient";
 
 type LoginState = {
   error?: string;
@@ -22,11 +21,9 @@ export const loginAction = async (
   }
 
   try {
-    const response = await fetch(`${getApiUrl()}/auth/login`, {
+    const response = await apiClient(`/auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-      credentials: "include",
       cache: "no-store",
     });
 

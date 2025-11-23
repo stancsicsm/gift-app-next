@@ -1,5 +1,3 @@
-import { getApiUrl } from "./env";
-
 type RequestOptions = RequestInit & {
   isServer?: boolean;
 };
@@ -44,4 +42,12 @@ export const apiClient = async (
   }
 
   return fetch(url, { ...defaultOptions, ...fetchOptions });
+};
+
+const getApiUrl = () => {
+  if (typeof window !== "undefined") {
+    return "/api";
+  }
+
+  return process.env.NEXT_PUBLIC_API_URL || "";
 };
