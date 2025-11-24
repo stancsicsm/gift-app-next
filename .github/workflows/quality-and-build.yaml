@@ -33,7 +33,7 @@ jobs:
         run: npm run lint
 
   build:
-    name: Build Application
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build application
+      - name: Build
         run: npm run build
 
       - name: Verify build output

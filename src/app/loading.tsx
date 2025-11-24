@@ -1,5 +1,7 @@
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 
-const WishlistsPageLoading = () => <LoadingPage />;
+const WishlistsPageLoading = () => {
+  return <LoadingPage />;
+};
 
 export default WishlistsPageLoading;
