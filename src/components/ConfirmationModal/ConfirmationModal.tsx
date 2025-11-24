@@ -1,10 +1,8 @@
-import { useEffect, useRef } from "react";
 import Label from "@/components/Label/Label";
+import Modal, { type ModalProps } from "@/components/Modal/Modal";
 import Button from "../Button/Button";
 
-export type ConfirmationModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
+export type ConfirmationModalProps = ModalProps & {
   onConfirm: () => void;
   title: string;
   message: string;
@@ -20,49 +18,25 @@ const ConfirmationModal = ({
   message,
   confirmText = "Confirm",
   cancelText = "Cancel",
-}: ConfirmationModalProps) => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (isOpen) {
-      if (!dialog.open) {
-        dialog.showModal();
-      }
-    } else {
-      if (dialog.open) {
-        dialog.close();
-      }
-    }
-  }, [isOpen]);
-
-  return (
-    <dialog ref={dialogRef} className="modal" onClose={onClose}>
-      <div className="modal-box cursor-default outline-none" tabIndex={-1}>
-        <Label size="large" weight="semi-bold" className="mb-2">
-          {title}
-        </Label>
-        <Label subtle>{message}</Label>
-        <div className="modal-action">
-          <form method="dialog" className="flex gap-2">
-            <Button variant="ghost" onClick={onClose}>
-              {cancelText}
-            </Button>
-            <Button variant="danger-gradient" onClick={onConfirm}>
-              {confirmText}
-            </Button>
-          </form>
-        </div>
+}: ConfirmationModalProps) => (
+  <Modal isOpen={isOpen} onClose={onClose}>
+    <div className="modal-box cursor-default outline-none" tabIndex={-1}>
+      <Label size="large" weight="semi-bold" className="mb-2">
+        {title}
+      </Label>
+      <Label subtle>{message}</Label>
+      <div className="modal-action">
+        <form method="dialog" className="flex gap-2">
+          <Button variant="ghost" onClick={onClose}>
+            {cancelText}
+          </Button>
+          <Button variant="danger-gradient" onClick={onConfirm}>
+            {confirmText}
+          </Button>
+        </form>
       </div>
-      <form method="dialog" className="modal-backdrop">
-        <button className="cursor-default" onClick={onClose}>
-          close
-        </button>
-      </form>
-    </dialog>
-  );
-};
+    </div>
+  </Modal>
+);
 
 export default ConfirmationModal;
