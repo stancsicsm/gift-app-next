@@ -20,7 +20,7 @@ const FullScreenImage = ({
   <Modal
     isOpen={isOpen}
     onClose={onClose}
-    className="bg-black/80 backdrop-blur-sm p-4"
+    className="modal-top backdrop-blur-sm p-4"
   >
     <div className="relative">
       <Button

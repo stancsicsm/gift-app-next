@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { ChevronRight, ExternalLink } from "lucide-react";
+import { ChevronRight, ExternalLink, Maximize2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -137,6 +137,10 @@ const ImageOrPlaceholderWithPrice = ({
       alt={name}
       className="w-full aspect-[16/10] object-cover"
       onClick={onClick}
+    />
+    <Maximize2
+      size={20}
+      className="absolute top-4 right-4 text-white cursor-pointer"
     />
     {price !== null && (
       <div
