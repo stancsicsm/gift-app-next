@@ -3,8 +3,10 @@
 import clsx from "clsx";
 import { ChevronRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Button from "@/components/Button/Button";
+import FullScreenImage from "@/components/FullScreenImage/FullScreenImage";
 import GiftMessage from "@/components/GiftMessage/GiftMessage";
 import Label from "@/components/Label/Label";
 import StyledToaster from "@/components/StyledToaster/StyledToaster";
@@ -22,6 +24,7 @@ type GiftPageContentProps = {
 
 const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
   const { confirm, ConfirmationDialog } = useConfirmation();
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   if (!gift) {
     return <GiftMessage message="Gift not found" />;
@@ -52,11 +55,22 @@ const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
       <StyledToaster />
       <ConfirmationDialog />
 
+      {gift.imageUrl && (
+        <FullScreenImage
+          isOpen={isImageOpen}
+          onClose={() => setIsImageOpen(false)}
+          src={gift.imageUrl}
+          alt={gift.name}
+        />
+      )}
+
       <ImageOrPlaceholderWithPrice
         name={gift.name}
         price={gift.price}
         imageUrl={gift.imageUrl}
+        onClick={() => setIsImageOpen(true)}
       />
+
       <div className="flex flex-col flex-1 p-4 pb-8 gap-4">
         <Label size="xx-large" weight="semi-bold">
           {gift.name}
@@ -104,16 +118,25 @@ const GiftDetailPageContent = ({ gift, currentUser }: GiftPageContentProps) => {
 
 export default GiftDetailPageContent;
 
+type ImageOrPlaceholderWithPriceProps = Pick<
+  Gift,
+  "name" | "price" | "imageUrl"
+> & {
+  onClick?: () => void;
+};
+
 const ImageOrPlaceholderWithPrice = ({
   name,
   price,
   imageUrl,
-}: Pick<Gift, "name" | "price" | "imageUrl">) => (
+  onClick,
+}: ImageOrPlaceholderWithPriceProps) => (
   <div className="relative">
     <img
       src={imageUrl ?? "/gift-placeholder.svg"}
       alt={name}
-      className="w-full h-[250px] object-cover"
+      className="w-full aspect-[16/10] object-cover"
+      onClick={onClick}
     />
     {price !== null && (
       <div
