@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { apiClient } from "@/lib/apiClient";
 
 type DeleteGiftResult =
@@ -29,13 +29,6 @@ export const deleteGiftAction = async (
         error: `Something went wrong. Please try again. ${errorData.error ? `Details: ${errorData.error}` : ""}`,
       };
     }
-
-    revalidatePath("/gifts/own");
-
-    return {
-      success: true,
-      message: "Gift deleted successfully!",
-    };
   } catch (error) {
     console.error("Delete gift error:", error);
     return {
@@ -43,4 +36,6 @@ export const deleteGiftAction = async (
       error: "Something went wrong. Please try again.",
     };
   }
+
+  redirect("/gifts/own?action=delete");
 };
