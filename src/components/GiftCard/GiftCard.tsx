@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 import Button from "@/components/Button/Button";
 import Label from "@/components/Label/Label";
@@ -22,13 +23,15 @@ const GiftCard = ({
 }: GiftCardProps) => {
   return (
     <div className="card flex-row w-full bg-base-200 shadow-sm">
-      <figure className="p-4">
-        <img
+      <div className="p-4">
+        <Image
           src={imageUrl ?? "/gift-placeholder.svg"}
           alt={title}
+          width={100}
+          height={100}
           className="w-[100px] h-[100px] rounded-xl object-cover"
         />
-      </figure>
+      </div>
       <div className="card-body p-4 pl-0 min-w-0 flex-1">
         <div className="flex flex-col gap-0.5">
           <Label size="large" weight="semi-bold" noLineBreak>

@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { ChevronRight, ExternalLink, Maximize2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -132,10 +133,12 @@ const ImageOrPlaceholderWithPrice = ({
   onClick,
 }: ImageOrPlaceholderWithPriceProps) => (
   <div className="relative">
-    <img
+    <Image
       src={imageUrl ?? "/gift-placeholder.svg"}
       alt={name}
-      className="w-full aspect-[16/10] object-cover"
+      width={1600}
+      height={1000}
+      className="w-full max-h-[300px] aspect-[16/10] object-cover cursor-pointer"
       onClick={onClick}
     />
     <Maximize2
