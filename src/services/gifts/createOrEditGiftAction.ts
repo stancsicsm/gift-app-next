@@ -73,5 +73,5 @@ export const createOrEditGiftAction = async (
     };
   }
 
-  redirect("/gifts/own?success=true");
+  redirect("/gifts/own?action=create");
 };

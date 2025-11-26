@@ -19,16 +19,22 @@ type OwnGiftsPageProps = {
 const OwnGiftsPageContent = ({ gifts }: OwnGiftsPageProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const success = searchParams.get("success");
-  const hasShownToast = useRef(false);
+  const action = searchParams.get("action");
+  const lastShownAction = useRef<string | null>(null);
 
   useEffect(() => {
-    if (success === "true" && !hasShownToast.current) {
-      hasShownToast.current = true;
+    if (action === "create" && lastShownAction.current !== action) {
+      lastShownAction.current = action;
       toast.success("Gift added successfully!");
       router.replace("/gifts/own");
+    } else if (action === "delete" && lastShownAction.current !== action) {
+      lastShownAction.current = action;
+      toast.success("Gift deleted successfully!");
+      router.replace("/gifts/own");
+    } else if (!action) {
+      lastShownAction.current = null;
     }
-  }, [success, router]);
+  }, [action, router]);
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -63,9 +69,7 @@ const OwnGiftButtons = ({ giftId }: { giftId: number }) => {
 
   const deleteGift = async () => {
     const result = await deleteGiftAction(giftId);
-    if (result.success) {
-      toast.success(result.message);
-    } else {
+    if (!result.success) {
       toast.error(result.error);
     }
   };
