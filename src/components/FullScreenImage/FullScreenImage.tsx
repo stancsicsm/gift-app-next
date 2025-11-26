@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import Image from "next/image";
 import Modal from "@/components/Modal/Modal";
 import Button from "../Button/Button";
 
@@ -31,7 +32,13 @@ const FullScreenImage = ({
       >
         <X size={20} />
       </Button>
-      <img src={src} alt={alt} className="rounded-2xl" />
+      <Image
+        src={src}
+        alt={alt}
+        width={1000}
+        height={1000}
+        className="rounded-2xl"
+      />
     </div>
   </Modal>
 );
