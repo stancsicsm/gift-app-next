@@ -7,7 +7,6 @@ import Label from "@/components/Label/Label";
 const Footer = () => {
   const [showVersionInfo, setShowVersionInfo] = useState(false);
   const buildTime = process.env.NEXT_PUBLIC_BUILD_TIME;
-  const commitHash = process.env.NEXT_PUBLIC_COMMIT_HASH;
 
   const formatBuildTime = (isoString: string | undefined) => {
     if (!isoString) return undefined;
@@ -40,14 +39,9 @@ const Footer = () => {
           Version info
         </Label>
         {showVersionInfo && (
-          <div className="flex flex-col items-center gap-0">
-            <Label size="small" subtle>
-              Build: {formatBuildTime(buildTime)}
-            </Label>
-            <Label size="small" subtle>
-              Commit: {commitHash}
-            </Label>
-          </div>
+          <Label size="small" subtle>
+            Build: {formatBuildTime(buildTime)}
+          </Label>
         )}
       </aside>
     </footer>
