@@ -9,7 +9,7 @@ const Footer = () => {
           src="/footer-logo.svg"
           alt="Footer Logo"
           width={64}
-          height={64}
+          height={36}
           className="w-16 h-auto"
         />
         <Label subtle>Pocok és Társa</Label>
