@@ -10,6 +10,7 @@ export type LabelProps = PropsWithClassName<
     weight?: "regular" | "semi-bold" | "bold";
     noLineBreak?: boolean;
     as?: ElementType;
+    onClick?: () => void;
   }>
 >;
 
@@ -20,6 +21,7 @@ const Label = ({
   noLineBreak,
   children,
   as = "p",
+  onClick,
   className,
 }: LabelProps) => {
   const Component = as;
@@ -33,6 +35,7 @@ const Label = ({
         },
         className,
       )}
+      onClick={onClick}
     >
       {children}
     </Component>
