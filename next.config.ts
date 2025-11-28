@@ -1,10 +1,18 @@
 import type { NextConfig } from "next";
 
 const buildTimestamp = new Date().toISOString();
-const commitHash = require("node:child_process")
-  .execSync("git rev-parse --short HEAD")
-  .toString()
-  .trim();
+const getCommitHash = () => {
+  try {
+    return require("node:child_process")
+      .execSync("git rev-parse --short HEAD")
+      .toString()
+      .trim();
+  } catch (_e) {
+    return process.env.GIT_COMMIT ?? "unknown";
+  }
+};
+
+const commitHash = getCommitHash();
 
 const nextConfig: NextConfig = {
   output: "standalone",
