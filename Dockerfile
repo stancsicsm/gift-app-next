@@ -21,9 +21,6 @@ RUN \
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-RUN apk add --no-cache git
-ARG GIT_COMMIT
-ENV GIT_COMMIT=$GIT_COMMIT
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
