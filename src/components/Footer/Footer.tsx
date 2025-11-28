@@ -1,7 +1,26 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import Label from "@/components/Label/Label";
 
 const Footer = () => {
+  const [showVersionInfo, setShowVersionInfo] = useState(false);
+  const buildTime = process.env.NEXT_PUBLIC_BUILD_TIME;
+  const commitHash = process.env.NEXT_PUBLIC_COMMIT_HASH;
+
+  const formatBuildTime = (isoString: string | undefined) => {
+    if (!isoString) return undefined;
+    const date = new Date(isoString);
+    return date.toLocaleString("hu-HU", {
+      year: "numeric",
+      month: "2-digit",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   return (
     <footer className="footer footer-center px-4 pt-12 pb-24">
       <aside>
@@ -13,9 +32,23 @@ const Footer = () => {
           className="w-16 h-auto"
         />
         <Label subtle>Pocok és Társa</Label>
-        {/*<Label subtle className="link pt-4">*/}
-        {/*  Send us feedback*/}
-        {/*</Label>*/}
+        <Label
+          subtle
+          className="link"
+          onClick={() => setShowVersionInfo((v) => !v)}
+        >
+          Version info
+        </Label>
+        {showVersionInfo && (
+          <div className="flex flex-col items-center gap-0">
+            <Label size="small" subtle>
+              Build: {formatBuildTime(buildTime)}
+            </Label>
+            <Label size="small" subtle>
+              Commit: {commitHash}
+            </Label>
+          </div>
+        )}
       </aside>
     </footer>
   );
